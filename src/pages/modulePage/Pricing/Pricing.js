@@ -172,9 +172,6 @@ function Pricing() {
                 if (data.service_type === 'CloudServerProduct') {
                     routerPath = router.cloud_server_product;
                 }
-                if (data.service_type === 'ResourceProduct') {
-                    routerPath = router.resources_products;
-                }
 
                 return (
                     <Link to={`${routerPath}?id=${data.service._id}`} target="_blank">

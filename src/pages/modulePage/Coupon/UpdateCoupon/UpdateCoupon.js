@@ -291,7 +291,7 @@ function UpdateCoupon({ open, setOpen, coupon, callback, setCallback }) {
                             >
                                 <Select
                                     placeholder="Chọn phương thức thanh toán"
-                                    options={[{ label: 'Ví Thegioicode', value: 'app_wallet' }]}
+                                    options={[{ label: 'Ví Netcode', value: 'app_wallet' }]}
                                 />
                             </Form.Item>
                         </Col>

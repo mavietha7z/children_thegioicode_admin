@@ -7,7 +7,7 @@ import router from '~/configs/routes';
 
 function NotFound({ coming = false }) {
     useEffect(() => {
-        document.title = 'Thegioicode.com - Not Found';
+        document.title = 'Netcode.vn - Not Found';
     }, []);
 
     return (

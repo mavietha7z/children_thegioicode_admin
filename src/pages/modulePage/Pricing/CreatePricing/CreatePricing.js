@@ -177,7 +177,6 @@ function CreatePricing({ open, setOpen, callback, setCallback }) {
                                     placeholder="Loại dịch vụ"
                                     options={[
                                         { label: 'Mã nguồn', value: 'Source' },
-                                        { label: 'Tài khoản', value: 'ResourceProduct' },
                                         { label: 'Tạo website', value: 'Template' },
                                         { label: 'Cloud Server', value: 'CloudServerProduct' },
                                     ]}

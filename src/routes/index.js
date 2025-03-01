@@ -16,9 +16,6 @@ import Users from '~/pages/accountPage/Users';
 import Membership from '~/pages/accountPage/Membership';
 import LoginHistory from '~/pages/accountPage/LoginHistory';
 
-import Partner from '~/pages/partnerPage/Partner';
-import Service from '~/pages/partnerPage/Service';
-
 import NotificationWeb from '~/pages/notiPage/NotificationWeb';
 import NotificationEmail from '~/pages/notiPage/NotificationEmail';
 
@@ -29,12 +26,10 @@ import ApiKeys from '~/pages/modulePage/Apikey';
 import Pricing from '~/pages/modulePage/Pricing';
 
 import Paygate from '~/pages/configPage/Paygate';
-import NewFeed from '~/pages/configPage/NewsFeed';
 import Options from '~/pages/configPage/Paygate/Options';
 import SettingInfo from '~/pages/configPage/Setting/SettingInfo';
 import OtherConfig from '~/pages/configPage/Setting/OtherConfig';
 import SettingSendMail from '~/pages/configPage/Setting/SettingSendMail';
-import PublishNewsFeed from '~/pages/configPage/NewsFeed/PublishNewsFeed';
 
 import SourcePublished from '~/pages/sourcePage/SourcePublished';
 import SourceUnpublished from '~/pages/sourcePage/SourceUnpublished';
@@ -45,8 +40,6 @@ import Wallets from '~/pages/walletPage/Wallets';
 import Withdrawal from '~/pages/walletPage/Withdrawal';
 import BonusPoint from '~/pages/walletPage/BonusPoint';
 import WalletHistory from '~/pages/walletPage/WalletHistory';
-
-import Databases from '~/pages/databasePage/Databases';
 
 import Userbank from '~/pages/bankPage/Userbank';
 import Localbank from '~/pages/bankPage/Localbank';
@@ -60,10 +53,6 @@ import ServerOrders from '~/pages/cloudServerPage/Orders';
 import ServerRegions from '~/pages/cloudServerPage/Regions';
 import ServerPartners from '~/pages/cloudServerPage/Partners';
 import ServerProducts from '~/pages/cloudServerPage/Products';
-
-import ResourceProduct from '~/pages/resourcePage/Product';
-import ResourceAccount from '~/pages/resourcePage/Account';
-import ResourceCategory from '~/pages/resourcePage/Category';
 
 export const privateRoutes = [
     { path: '*', component: NotFound },
@@ -79,19 +68,14 @@ export const privateRoutes = [
     { path: router.pricing, component: Pricing },
     { path: router.wallets, component: Wallets },
     { path: router.paygates, component: Paygate },
-    { path: router.partners, component: Partner },
     { path: router.invoices, component: Invoices },
     { path: router.templates, component: Template },
-    { path: router.news_feeds, component: NewFeed },
-    { path: router.databases, component: Databases },
     { path: router.localbank, component: Localbank },
     { path: router.memberships, component: Membership },
     { path: router.localbank_users, component: Userbank },
-    { path: router.partners_services, component: Service },
     { path: router.login, component: Login, layout: null },
     { path: router.settings_info, component: SettingInfo },
     { path: router.settings_other, component: OtherConfig },
-    { path: router.resources, component: ResourceCategory },
     { path: router.users_histories, component: LoginHistory },
     { path: router.cloud_server_plan, component: ServerPlans },
     { path: router.wallets_withdrawal, component: Withdrawal },
@@ -108,12 +92,8 @@ export const privateRoutes = [
     { path: router.cloud_server_region, component: ServerRegions },
     { path: router.sources_published, component: SourcePublished },
     { path: router.paygates + '/options/:id', component: Options },
-    { path: router.resources_products, component: ResourceProduct },
-    { path: router.resources_accounts, component: ResourceAccount },
     { path: router.cloud_server_product, component: ServerProducts },
     { path: router.cloud_server_partner, component: ServerPartners },
     { path: router.notification_email, component: NotificationEmail },
     { path: router.sources_unpublished, component: SourceUnpublished },
-    { path: router.news_feeds + '/create', component: PublishNewsFeed },
-    { path: router.news_feeds + '/edit/:id', component: PublishNewsFeed },
 ];

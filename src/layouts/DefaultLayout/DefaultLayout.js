@@ -6,17 +6,14 @@ import { Avatar, Divider, Drawer, Dropdown, Flex, Layout, Menu, Spin, Tooltip, n
 import {
     IconBox,
     IconApi,
-    IconUsers,
     IconWallet,
     IconServer2,
     IconTemplate,
     IconAlignLeft,
     IconBorderAll,
-    IconAffiliate,
     IconAlignRight,
     IconUsersGroup,
     IconSourceCode,
-    IconDatabaseCog,
     IconShoppingBag,
     IconSettingsCog,
     IconBuildingBank,
@@ -48,29 +45,22 @@ function getItem(label, key, icon, children, type) {
 
 const items = [
     getItem(<Link to={router.home}>Trang chủ</Link>, router.home, <IconBorderAll />),
-    getItem('Đối tác', 'sub-1', <IconAffiliate />, [
-        getItem(<Link to={router.partners}>Đối tác</Link>, router.partners),
-        getItem(<Link to={router.partners_services}>Dịch vụ</Link>, router.partners_services),
-    ]),
     getItem('Tài khoản', 'sub-2', <IconUsersGroup />, [
         getItem(<Link to={router.memberships}>Nhóm</Link>, router.memberships),
         getItem(<Link to={router.users}>Người dùng</Link>, router.users),
         getItem(<Link to={router.users_histories}>Lịch sử đăng nhập</Link>, router.users_histories),
     ]),
     getItem('Thông báo', 'sub-3', <IconNotification />, [
-        getItem(<Link to={router.notification_web}>Web</Link>, router.notification_web),
-        getItem(<Link to={router.notification_email}>Email</Link>, router.notification_email),
+        getItem(<Link to={router.notification_web}>Danh sách</Link>, router.notification_web),
     ]),
     getItem('Ví điện tử', 'sub-4', <IconWallet />, [
         getItem(<Link to={router.wallets}>Danh sách ví</Link>, router.wallets),
         getItem(<Link to={router.wallets_bonus_points}>Điểm thưởng</Link>, router.wallets_bonus_points),
-        getItem(<Link to={router.wallets_withdrawal}>Đơn rút tiền</Link>, router.wallets_withdrawal),
         getItem(<Link to={router.wallets_histories}>Lịch sử ví</Link>, router.wallets_histories),
     ]),
     getItem('Ngân hàng', 'sub-5', <IconBuildingBank />, [
         getItem(<Link to={router.localbank}>Danh sách ngân hàng</Link>, router.localbank),
         getItem(<Link to={router.localbank_users}>Ngân hàng thành viên</Link>, router.localbank_users),
-        getItem(<Link to={router.localbank_histories}>Lịch sử ngân hàng</Link>, router.localbank_histories),
     ]),
     getItem('Thanh toán', 'sub-6', <IconCreditCardPay />, [getItem(<Link to={router.invoices}>Hoá đơn</Link>, router.invoices)]),
     getItem('Đơn hàng', 'sub-7', <IconShoppingBag />, [
@@ -90,16 +80,9 @@ const items = [
         getItem(<Link to={router.templates_orders}>Đơn tạo website</Link>, router.templates_orders),
     ]),
     getItem('Mã nguồn', 'sub-10', <IconSourceCode />, [
-        getItem(<Link to={router.sources_published}>Đã duyệt</Link>, router.sources_published),
-        getItem(<Link to={router.sources_unpublished}>Chờ duyệt</Link>, router.sources_unpublished),
-    ]),
-    getItem('Tài Khoản', 'sub-11', <IconUsers />, [
-        getItem(<Link to={router.resources}>Danh mục</Link>, router.resources),
-        getItem(<Link to={router.resources_products}>Sản phẩm</Link>, router.resources_products),
-        getItem(<Link to={router.resources_accounts}>Tài khoản</Link>, router.resources_accounts),
+        getItem(<Link to={router.sources_published}>Danh sách</Link>, router.sources_published),
     ]),
     getItem('Public API', 'sub-12', <IconApi />, [getItem(<Link to={router.apis}>Danh sách</Link>, router.apis)]),
-    getItem('Database', 'sub-13', <IconDatabaseCog />, [getItem(<Link to={router.databases}>Quản trị dữ liệu</Link>, router.databases)]),
     getItem('Mô-đun khác', 'sub-14', <IconBox />, [
         getItem(<Link to={router.tokens}>Token</Link>, router.tokens),
         getItem(<Link to={router.cycles}>Chu kỳ</Link>, router.cycles),
@@ -109,7 +92,6 @@ const items = [
     ]),
     getItem('Cấu hình', 'sub-15', <IconSettingsCog />, [
         getItem(<Link to={router.settings_info}>Cài đặt</Link>, router.settings_info),
-        getItem(<Link to={router.news_feeds}>Thông báo</Link>, router.news_feeds),
         getItem(<Link to={router.paygates}>Cổng thanh toán</Link>, router.paygates),
     ]),
 ];

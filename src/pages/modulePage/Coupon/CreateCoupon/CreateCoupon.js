@@ -220,7 +220,6 @@ function CreateCoupon({ open, setOpen, callback, setCallback }) {
                                     onChange={handleSelectService}
                                     options={[
                                         { label: 'Mã nguồn', value: 'Source' },
-                                        { label: 'Tài khoản', value: 'ResourceProduct' },
                                         { label: 'Tạo website', value: 'Template' },
                                         { label: 'Cloud Server', value: 'CloudServerProduct' },
                                     ]}
@@ -479,7 +478,7 @@ function CreateCoupon({ open, setOpen, callback, setCallback }) {
                             >
                                 <Select
                                     placeholder="Chọn phương thức thanh toán"
-                                    options={[{ label: 'Ví Thegioicode', value: 'app_wallet' }]}
+                                    options={[{ label: 'Ví Netcode', value: 'app_wallet' }]}
                                 />
                             </Form.Item>
                         </Col>
