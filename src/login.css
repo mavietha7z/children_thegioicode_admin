@@ -1,0 +1,39 @@
+.login {
+    align-items: center;
+    background-color: #f5f2ea;
+    background-image: url('./assets/image/bg_banner.png');
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px 16px;
+    position: relative;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: calc(100vh - 64px);
+    width: 100%;
+}
+
+.login-content {
+    width: 100%;
+    max-width: 430px;
+    border-radius: 30px !important;
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.1);
+    padding: 20px 20px 30px;
+    border: 1px solid #f0f0f0;
+}
+
+.login-content .ant-input-prefix {
+    color: #7a869a;
+    margin-right: 6px;
+}
+
+.login h3 {
+    color: #031b4e;
+    text-align: center;
+}
+
+.login-google {
+    height: 30px;
+    padding: 7px 5px 5px;
+}

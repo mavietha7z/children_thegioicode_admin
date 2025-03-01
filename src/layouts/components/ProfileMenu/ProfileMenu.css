@@ -1,0 +1,57 @@
+.profile__menu-content {
+    border-radius: 8px;
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+    width: 320px;
+}
+
+.profile__menu-status {
+    background-color: #096eff;
+    color: rgb(255, 255, 255);
+    margin-top: 0.25rem;
+    border-radius: 3px;
+    border-radius: 1000px;
+    font-size: 11px;
+    line-height: 13px;
+    max-width: max-content;
+    padding: 5px 10px;
+    text-transform: uppercase;
+    white-space: break-spaces;
+}
+
+.profile__menu-list {
+    padding: 4px;
+    list-style-type: none;
+    background-color: #ffffff;
+    background-clip: padding-box;
+    border-radius: 8px;
+    outline: none;
+}
+
+.profile__menu-item {
+    clear: both;
+    margin: 0;
+    padding: 8px 12px;
+    color: rgba(0, 0, 0, 0.88);
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 1.5714285714285714;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.profile__menu-item:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+.profile__menu-item a {
+    color: inherit;
+    transition: all 0.2s;
+}
+
+.profile__menu-title {
+    margin-left: 8px;
+}
