@@ -1,36 +1,18 @@
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { Fragment, useEffect, useState } from 'react';
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import { IconArrowLeft, IconInfoCircleFilled, IconTrash } from '@tabler/icons-react';
+import { IconArrowLeft, IconInfoCircleFilled, IconRotate, IconTrash } from '@tabler/icons-react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import {
-    Col,
-    Row,
-    Card,
-    Flex,
-    Spin,
-    Input,
-    Space,
-    Image,
-    Table,
-    Button,
-    Switch,
-    Tooltip,
-    Breadcrumb,
-    Pagination,
-    Popconfirm,
-    notification,
-} from 'antd';
+import { Card, Flex, Spin, Space, Image, Table, Button, Switch, Tooltip, Breadcrumb, Pagination, Popconfirm, notification } from 'antd';
 
 import router from '~/configs/routes';
-import CreateImage from './CreateImage';
 import UpdateImage from './UpdateImage';
 import IconQuestion from '~/assets/icon/IconQuestion';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
 import imageNotFound from '~/assets/image/image_not.jpg';
 import {
     controlAuthGetCloudServerImages,
+    requestAuthAsyncCloudServerImage,
     requestAuthUpdateCloudServerImage,
     controlAuthDestroyCloudServerImage,
 } from '~/services/cloudServer';
@@ -40,7 +22,7 @@ function Images() {
     const [image, setImage] = useState(null);
     const [loading, setLoading] = useState(false);
     const [openUpdate, setOpenUpdate] = useState(false);
-    const [openCreate, setOpenCreate] = useState(false);
+    const [loadingAsync, setLoadingAsync] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [pages, setPages] = useState(1);
@@ -115,6 +97,43 @@ function Images() {
         }
     };
 
+    const handleAsyncImages = async () => {
+        setLoadingAsync(true);
+        const result = await requestAuthAsyncCloudServerImage();
+
+        setLoadingAsync(false);
+        if (result.status === 401 || result.status === 403) {
+            dispatch(logoutAuthSuccess());
+            navigate(`${router.login}?redirect_url=${pathname}`);
+        } else if (result?.status === 200) {
+            const getImages = await controlAuthGetCloudServerImages(page);
+
+            setLoading(false);
+            if (getImages.status === 401 || getImages.status === 403) {
+                dispatch(logoutAuthSuccess());
+                navigate(`${router.login}?redirect_url=${pathname}`);
+            } else if (getImages?.status === 200) {
+                setPages(getImages.pages);
+                setImages(getImages.data);
+
+                notification.success({
+                    message: 'Thông báo',
+                    description: result.message,
+                });
+            } else {
+                notification.error({
+                    message: 'Thông báo',
+                    description: getImages?.error || 'Lỗi hệ thống vui lòng thử lại sau',
+                });
+            }
+        } else {
+            notification.error({
+                message: 'Thông báo',
+                description: result?.error || 'Lỗi hệ thống vui lòng thử lại sau',
+            });
+        }
+    };
+
     const confirmDestroyServerImage = async (id) => {
         if (!id) {
             return notification.error({
@@ -176,11 +195,6 @@ function Images() {
             dataIndex: 'image_url',
             key: 'image_url',
             render: (image_url) => <Image width={40} src={image_url} alt="Avatar" fallback={imageNotFound} className="border rounded-8" />,
-        },
-        {
-            title: 'Mã',
-            dataIndex: 'code',
-            key: 'code',
         },
         {
             title: 'Trạng thái',
@@ -271,22 +285,19 @@ function Images() {
                     </Flex>
 
                     <Flex justify="end" className="responsive-item">
-                        <Row style={{ margin: '0 -4px', rowGap: 8 }}>
-                            <Col xs={24} md={16} className="mt-xs-2" style={{ padding: '0 4px' }}>
-                                <Input prefix={<SearchOutlined />} style={{ width: 260 }} placeholder="Tìm kiếm" />
-                            </Col>
-                            <Col xs={24} md={6} className="mt-xs-2" style={{ padding: '0 4px' }}>
-                                <Button className="box-center w-xs-full" type="primary" onClick={() => setOpenCreate(true)}>
-                                    <PlusOutlined />
-                                    Thêm mới
-                                </Button>
-                            </Col>
-                        </Row>
+                        <Button
+                            className="box-center w-xs-full gap-1"
+                            type="primary"
+                            onClick={handleAsyncImages}
+                            disabled={loadingAsync}
+                            loading={loadingAsync}
+                        >
+                            <IconRotate size={16} />
+                            Đồng bộ
+                        </Button>
                     </Flex>
                 </Flex>
             </Card>
-
-            {openCreate && <CreateImage open={openCreate} setOpen={setOpenCreate} callback={images} setCallback={setImages} />}
 
             {openUpdate && image && (
                 <UpdateImage open={openUpdate} setOpen={setOpenUpdate} image={image} callback={images} setCallback={setImages} />

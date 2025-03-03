@@ -1,5 +1,57 @@
 import request from '~/utils';
 
+//  Partner
+export const requestAuthGetPartner = async () => {
+    try {
+        const res = await request.get('/manages/partners');
+
+        return res.data;
+    } catch (error) {
+        return error.response?.data;
+    }
+};
+
+export const requestAuthCreatePartner = async (data) => {
+    try {
+        const res = await request.post('/manages/partners/create', data);
+
+        return res.data;
+    } catch (error) {
+        return error.response?.data;
+    }
+};
+
+export const requestAuthUpdatePartner = async (id, type, data) => {
+    try {
+        const res = await request.put('/manages/partners/update', data, {
+            params: {
+                type,
+                id,
+            },
+        });
+
+        return res.data;
+    } catch (error) {
+        return error.response?.data;
+    }
+};
+
+export const requestAuthDestroyPartner = async (id) => {
+    try {
+        const res = await request.delete('/manages/partners/destroy', {
+            params: {
+                id,
+            },
+        });
+
+        return res.data;
+    } catch (error) {
+        return error.response?.data;
+    }
+};
+
+// App
+
 export const requestAuthGetInfoApps = async () => {
     try {
         const res = await request.get('/manages/apps/info');

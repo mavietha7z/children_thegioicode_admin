@@ -1,30 +1,11 @@
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { Fragment, useEffect, useState } from 'react';
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { IconArrowLeft, IconCoin, IconInfoCircleFilled, IconPlus, IconTrash } from '@tabler/icons-react';
-import {
-    Row,
-    Col,
-    Card,
-    Flex,
-    Spin,
-    Space,
-    Table,
-    Input,
-    Badge,
-    Button,
-    Switch,
-    Tooltip,
-    Breadcrumb,
-    Popconfirm,
-    Pagination,
-    notification,
-} from 'antd';
+import { IconArrowLeft, IconCoin, IconInfoCircleFilled, IconPlus, IconRotate, IconTrash } from '@tabler/icons-react';
+import { Card, Flex, Spin, Space, Table, Badge, Button, Switch, Tooltip, Breadcrumb, Popconfirm, Pagination, notification } from 'antd';
 
 import router from '~/configs/routes';
-import CreateProduct from './CreateProduct';
 import UpdateProduct from './UpdateProduct';
 import IconQuestion from '~/assets/icon/IconQuestion';
 import DrawerPricing from '~/components/DrawerPricing';
@@ -32,6 +13,7 @@ import { logoutAuthSuccess } from '~/redux/reducer/auth';
 import { requestAuthCreatePricing } from '~/services/module';
 import {
     controlAuthGetCloudServerProduct,
+    requestAuthAsyncCloudServerProduct,
     requestAuthUpdateCloudServerProduct,
     controlAuthDestroyCloudServerProduct,
 } from '~/services/cloudServer';
@@ -40,9 +22,9 @@ function ServerProducts() {
     const [products, setProducts] = useState([]);
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [openCreate, setOpenCreate] = useState(false);
     const [openUpdate, setOpenUpdate] = useState(false);
     const [openPricing, setOpenPricing] = useState(false);
+    const [loadingAsync, setLoadingAsync] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [pages, setPages] = useState(1);
@@ -192,6 +174,43 @@ function ServerProducts() {
         }
     };
 
+    const handleAsyncRegions = async () => {
+        setLoadingAsync(true);
+        const result = await requestAuthAsyncCloudServerProduct();
+
+        setLoadingAsync(false);
+        if (result.status === 401 || result.status === 403) {
+            dispatch(logoutAuthSuccess());
+            navigate(`${router.login}?redirect_url=${pathname}`);
+        } else if (result?.status === 200) {
+            const getProducts = await controlAuthGetCloudServerProduct(page, id);
+
+            setLoading(false);
+            if (getProducts.status === 401 || getProducts.status === 403) {
+                dispatch(logoutAuthSuccess());
+                navigate(`${router.login}?redirect_url=${pathname}`);
+            } else if (getProducts?.status === 200) {
+                setPages(getProducts.pages);
+                setProducts(getProducts.data);
+
+                notification.success({
+                    message: 'Thông báo',
+                    description: result.message,
+                });
+            } else {
+                notification.error({
+                    message: 'Thông báo',
+                    description: getProducts?.error || 'Lỗi hệ thống vui lòng thử lại sau',
+                });
+            }
+        } else {
+            notification.error({
+                message: 'Thông báo',
+                description: result?.error || 'Lỗi hệ thống vui lòng thử lại sau',
+            });
+        }
+    };
+
     const confirmDestroyServerProduct = async (id) => {
         if (!id) {
             return notification.error({
@@ -237,18 +256,6 @@ function ServerProducts() {
             dataIndex: 'id',
             key: 'id',
             render: (id) => `#${id}`,
-        },
-        {
-            title: 'Máy chủ',
-            dataIndex: 'plan',
-            key: 'plan',
-            render: (plan) => (
-                <Link to={`${router.cloud_server_plan}?id=${plan._id}`} target="_blank">
-                    <span>#{plan.id}</span>
-                    <br />
-                    <span>{plan.title}</span>
-                </Link>
-            ),
         },
         {
             title: 'Cấu hình',
@@ -408,28 +415,24 @@ function ServerProducts() {
                     </Flex>
 
                     <Flex justify="end" className="responsive-item">
-                        <Row style={{ margin: '0 -4px', rowGap: 8 }}>
-                            <Col xs={24} md={16} className="mt-xs-2" style={{ padding: '0 4px' }}>
-                                <Input prefix={<SearchOutlined />} style={{ width: 260 }} placeholder="Tìm kiếm" />
-                            </Col>
-                            <Col xs={24} md={6} className="mt-xs-2" style={{ padding: '0 4px' }}>
-                                <Button className="box-center w-xs-full" type="primary" onClick={() => setOpenCreate(true)}>
-                                    <PlusOutlined />
-                                    Thêm mới
-                                </Button>
-                            </Col>
-                        </Row>
+                        <Button
+                            className="box-center w-xs-full gap-1"
+                            type="primary"
+                            onClick={handleAsyncRegions}
+                            disabled={loadingAsync}
+                            loading={loadingAsync}
+                        >
+                            <IconRotate size={16} />
+                            Đồng bộ
+                        </Button>
                     </Flex>
                 </Flex>
             </Card>
 
-            {openCreate && <CreateProduct open={openCreate} setOpen={setOpenCreate} callback={products} setCallback={setProducts} />}
-
+            {openPricing && <DrawerPricing open={openPricing} setOpen={setOpenPricing} onClick={handleCreatePricing} />}
             {openUpdate && product && (
                 <UpdateProduct open={openUpdate} setOpen={setOpenUpdate} product={product} callback={products} setCallback={setProducts} />
             )}
-
-            {openPricing && <DrawerPricing open={openPricing} setOpen={setOpenPricing} onClick={handleCreatePricing} />}
 
             <Card style={{ minHeight: 'calc(-171px + 100vh)' }}>
                 {!loading ? (

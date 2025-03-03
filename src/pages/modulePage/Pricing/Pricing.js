@@ -24,7 +24,7 @@ import {
 
 import router from '~/configs/routes';
 import CreatePricing from './CreatePricing';
-import DetailPricing from './DetailPricing';
+import UpdatePricing from './UpdatePricing';
 import { convertCurrency } from '~/configs';
 import IconQuestion from '~/assets/icon/IconQuestion';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
@@ -336,7 +336,7 @@ function Pricing() {
 
             {openCreate && <CreatePricing open={openCreate} setOpen={setOpenCreate} callback={pricings} setCallback={setPricings} />}
             {openDetail && pricing && (
-                <DetailPricing open={openDetail} setOpen={setOpenDetail} pricing={pricing} callback={pricings} setCallback={setPricings} />
+                <UpdatePricing open={openDetail} setOpen={setOpenDetail} pricing={pricing} callback={pricings} setCallback={setPricings} />
             )}
 
             <Card style={{ minHeight: 'calc(-171px + 100vh)' }}>

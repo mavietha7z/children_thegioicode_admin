@@ -150,7 +150,7 @@ function Orders() {
                     title = 'Chuyển khoản';
                 }
                 if (pay_method === 'app_wallet') {
-                    title = 'Ví Thegioicode';
+                    title = 'Ví Netcode';
                 }
                 return <Fragment>{title}</Fragment>;
             },

@@ -29,6 +29,7 @@
     --default_color: #3f4254;
     --border-antd: #d9d9d9;
     --border-table-antd: #f0f0f0;
+    --rounded-xl: 20px;
 }
 
 a {

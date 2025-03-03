@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Button, Col, Drawer, Flex, Form, Input, InputNumber, Row, Select, Space, Spin, notification } from 'antd';
+import { Button, Col, Drawer, Flex, Form, Input, InputNumber, Row, Space, Spin, notification } from 'antd';
 
 import router from '~/configs/routes';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
 import { requestAuthUpdatePricing } from '~/services/module';
 
-function DetailPricing({ open, setOpen, pricing, callback, setCallback }) {
+function UpdatePricing({ open, setOpen, pricing, callback, setCallback }) {
     const [loading, setLoading] = useState(false);
 
     const [form] = Form.useForm();
@@ -113,13 +113,7 @@ function DetailPricing({ open, setOpen, pricing, callback, setCallback }) {
                                     },
                                 ]}
                             >
-                                <Select
-                                    placeholder="Loại dịch vụ"
-                                    options={[
-                                        { label: 'Mã nguồn', value: 'Source' },
-                                        { label: 'Template', value: 'Template' },
-                                    ]}
-                                />
+                                <Input placeholder="Loại dịch vụ" readOnly />
                             </Form.Item>
                         </Col>
                         <Col md={12} xs={24}>
@@ -211,4 +205,4 @@ function DetailPricing({ open, setOpen, pricing, callback, setCallback }) {
     );
 }
 
-export default DetailPricing;
+export default UpdatePricing;

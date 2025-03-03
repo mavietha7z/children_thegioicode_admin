@@ -61,12 +61,11 @@ function UpdateImage({ open, setOpen, image, callback, setCallback }) {
             return notification.error({ message: 'Thông báo', description: 'Vui lòng chọn tải ảnh hệ điều hành' });
         }
 
-        const { title, group, code, priority, description } = values;
+        const { title, group, priority, description } = values;
 
         const data = {
             title,
             group,
-            code,
             priority,
             description,
             image_url: image_url[0],
@@ -121,7 +120,6 @@ function UpdateImage({ open, setOpen, image, callback, setCallback }) {
                 form={form}
                 onFinish={handleUpdateImage}
                 initialValues={{
-                    code: image.code,
                     title: image.title,
                     group: image.group,
                     priority: image.priority,
@@ -172,18 +170,13 @@ function UpdateImage({ open, setOpen, image, callback, setCallback }) {
                         </Form.Item>
                     </Col>
                     <Col md={12} xs={24}>
-                        <Form.Item name="code" label="Mã" rules={[{ required: true, message: 'Vui lòng nhập mã' }]}>
-                            <Input placeholder="Mã" />
-                        </Form.Item>
-                    </Col>
-                    <Col md={12} xs={24}>
                         <Form.Item name="priority" label="Ưu tiên" rules={[{ required: true, message: 'Vui lòng nhập thứ tự ưu tiên' }]}>
                             <InputNumber className="w-full" placeholder="Ưu tiên" />
                         </Form.Item>
                     </Col>
                     <Col md={24} xs={24}>
                         <Form.Item name="description" label="Mô tả">
-                            <TextArea rows={3} placeholder="Nhập mô tả ngắn" />
+                            <TextArea rows={3} placeholder="Nhập mô tả" />
                         </Form.Item>
                     </Col>
                     <Col md={8} xs={24}>

@@ -26,6 +26,7 @@ import ApiKeys from '~/pages/modulePage/Apikey';
 import Pricing from '~/pages/modulePage/Pricing';
 
 import Paygate from '~/pages/configPage/Paygate';
+import Partners from '~/pages/configPage/Partners';
 import Options from '~/pages/configPage/Paygate/Options';
 import SettingInfo from '~/pages/configPage/Setting/SettingInfo';
 import OtherConfig from '~/pages/configPage/Setting/OtherConfig';
@@ -47,11 +48,9 @@ import Localbank from '~/pages/bankPage/Localbank';
 import Template from '~/pages/templatePage/Template';
 import OrderTemplate from '~/pages/templatePage/OrderTemplate';
 
-import ServerPlans from '~/pages/cloudServerPage/Plans';
 import ServerImages from '~/pages/cloudServerPage/Images';
 import ServerOrders from '~/pages/cloudServerPage/Orders';
 import ServerRegions from '~/pages/cloudServerPage/Regions';
-import ServerPartners from '~/pages/cloudServerPage/Partners';
 import ServerProducts from '~/pages/cloudServerPage/Products';
 
 export const privateRoutes = [
@@ -68,6 +67,7 @@ export const privateRoutes = [
     { path: router.pricing, component: Pricing },
     { path: router.wallets, component: Wallets },
     { path: router.paygates, component: Paygate },
+    { path: router.partners, component: Partners },
     { path: router.invoices, component: Invoices },
     { path: router.templates, component: Template },
     { path: router.localbank, component: Localbank },
@@ -77,7 +77,6 @@ export const privateRoutes = [
     { path: router.settings_info, component: SettingInfo },
     { path: router.settings_other, component: OtherConfig },
     { path: router.users_histories, component: LoginHistory },
-    { path: router.cloud_server_plan, component: ServerPlans },
     { path: router.wallets_withdrawal, component: Withdrawal },
     { path: router.apis_players + '/:id', component: Account },
     { path: router.templates_orders, component: OrderTemplate },
@@ -93,7 +92,6 @@ export const privateRoutes = [
     { path: router.sources_published, component: SourcePublished },
     { path: router.paygates + '/options/:id', component: Options },
     { path: router.cloud_server_product, component: ServerProducts },
-    { path: router.cloud_server_partner, component: ServerPartners },
     { path: router.notification_email, component: NotificationEmail },
     { path: router.sources_unpublished, component: SourceUnpublished },
 ];

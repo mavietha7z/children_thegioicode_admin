@@ -68,11 +68,9 @@ const items = [
         getItem(<Link to={router.orders}>Danh sách</Link>, router.orders),
     ]),
     getItem('Cloud server', 'sub-8', <IconServer2 />, [
-        getItem(<Link to={router.cloud_server_partner}>Đối tác</Link>, router.cloud_server_partner),
         getItem(<Link to={router.cloud_server_region}>Khu vực</Link>, router.cloud_server_region),
-        getItem(<Link to={router.cloud_server_image}>Điều hành</Link>, router.cloud_server_image),
-        getItem(<Link to={router.cloud_server_plan}>Máy chủ</Link>, router.cloud_server_plan),
         getItem(<Link to={router.cloud_server_product}>Cấu hình</Link>, router.cloud_server_product),
+        getItem(<Link to={router.cloud_server_image}>Hệ điều hành</Link>, router.cloud_server_image),
         getItem(<Link to={router.cloud_server_orders}>Đơn máy chủ</Link>, router.cloud_server_orders),
     ]),
     getItem('Mẫu Website', 'sub-9', <IconTemplate />, [
@@ -91,6 +89,7 @@ const items = [
         getItem(<Link to={router.coupon}>Khuyễn mãi</Link>, router.coupon),
     ]),
     getItem('Cấu hình', 'sub-15', <IconSettingsCog />, [
+        getItem(<Link to={router.partners}>Đối tác</Link>, router.partners),
         getItem(<Link to={router.settings_info}>Cài đặt</Link>, router.settings_info),
         getItem(<Link to={router.paygates}>Cổng thanh toán</Link>, router.paygates),
     ]),

@@ -1,19 +1,15 @@
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { Fragment, useEffect, useState } from 'react';
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { IconArrowLeft, IconInfoCircleFilled, IconServer, IconTrash } from '@tabler/icons-react';
+import { IconArrowLeft, IconInfoCircleFilled, IconRotate, IconServer, IconTrash } from '@tabler/icons-react';
 import {
-    Row,
-    Col,
     Card,
     Flex,
     Spin,
     Space,
     Table,
     Image,
-    Input,
     Badge,
     Button,
     Switch,
@@ -26,12 +22,12 @@ import {
 
 import router from '~/configs/routes';
 import UpdateRegion from './UpdateRegion';
-import CreateRegion from './CreateRegion';
 import IconQuestion from '~/assets/icon/IconQuestion';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
 import imageNotFound from '~/assets/image/image_not.jpg';
 import {
     controlAuthGetCloudServerRegion,
+    requestAuthAsyncCloudServerRegion,
     requestAuthUpdateCloudServerRegion,
     controlAuthDestroyCloudServerRegion,
 } from '~/services/cloudServer';
@@ -45,7 +41,7 @@ function Regions() {
     const [openPlan, setOpenPlan] = useState(false);
     const [regionPlan, setRegionPlan] = useState(null);
     const [openUpdate, setOpenUpdate] = useState(false);
-    const [openCreate, setOpenCreate] = useState(false);
+    const [loadingAsync, setLoadingAsync] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [pages, setPages] = useState(1);
@@ -64,6 +60,7 @@ function Regions() {
             setLoading(true);
             const result = await controlAuthGetCloudServerRegion(page, id);
 
+            setLoading(false);
             if (result.status === 401 || result.status === 403) {
                 dispatch(logoutAuthSuccess());
                 navigate(`${router.login}?redirect_url=${pathname}`);
@@ -76,7 +73,6 @@ function Regions() {
                     description: result?.error || 'Lỗi hệ thống vui lòng thử lại sau',
                 });
             }
-            setLoading(false);
         };
         fetch();
 
@@ -114,6 +110,43 @@ function Regions() {
                 message: 'Thông báo',
                 description: result.message,
             });
+        } else {
+            notification.error({
+                message: 'Thông báo',
+                description: result?.error || 'Lỗi hệ thống vui lòng thử lại sau',
+            });
+        }
+    };
+
+    const handleAsyncRegions = async () => {
+        setLoadingAsync(true);
+        const result = await requestAuthAsyncCloudServerRegion();
+
+        setLoadingAsync(false);
+        if (result.status === 401 || result.status === 403) {
+            dispatch(logoutAuthSuccess());
+            navigate(`${router.login}?redirect_url=${pathname}`);
+        } else if (result?.status === 200) {
+            const getRegions = await controlAuthGetCloudServerRegion(page, id);
+
+            setLoading(false);
+            if (getRegions.status === 401 || getRegions.status === 403) {
+                dispatch(logoutAuthSuccess());
+                navigate(`${router.login}?redirect_url=${pathname}`);
+            } else if (getRegions?.status === 200) {
+                setPages(getRegions.pages);
+                setRegions(getRegions.data);
+
+                notification.success({
+                    message: 'Thông báo',
+                    description: result.message,
+                });
+            } else {
+                notification.error({
+                    message: 'Thông báo',
+                    description: getRegions?.error || 'Lỗi hệ thống vui lòng thử lại sau',
+                });
+            }
         } else {
             notification.error({
                 message: 'Thông báo',
@@ -283,35 +316,23 @@ function Regions() {
                         />
                     </Flex>
                     <Flex justify="end" className="responsive-item">
-                        <Row style={{ margin: '0 -4px', rowGap: 8 }}>
-                            <Col xs={24} md={16} className="mt-xs-2" style={{ padding: '0 4px' }}>
-                                <Input prefix={<SearchOutlined />} style={{ width: 260 }} placeholder="Tìm kiếm" />
-                            </Col>
-                            <Col xs={24} md={6} className="mt-xs-2" style={{ padding: '0 4px' }}>
-                                <Button className="box-center w-xs-full" type="primary" onClick={() => setOpenCreate(true)}>
-                                    <PlusOutlined />
-                                    Thêm mới
-                                </Button>
-                            </Col>
-                        </Row>
+                        <Button
+                            className="box-center w-xs-full gap-1"
+                            type="primary"
+                            onClick={handleAsyncRegions}
+                            disabled={loadingAsync}
+                            loading={loadingAsync}
+                        >
+                            <IconRotate size={16} />
+                            Đồng bộ
+                        </Button>
                     </Flex>
                 </Flex>
             </Card>
 
+            {openPlan && regionPlan && <RegionPlans open={openPlan} setOpen={setOpenPlan} plans={plans} />}
             {openUpdate && region && (
                 <UpdateRegion open={openUpdate} setOpen={setOpenUpdate} region={region} callback={regions} setCallback={setRegions} />
-            )}
-            {openCreate && <CreateRegion open={openCreate} setOpen={setOpenCreate} callback={regions} setCallback={setRegions} />}
-
-            {openPlan && regionPlan && (
-                <RegionPlans
-                    open={openPlan}
-                    setOpen={setOpenPlan}
-                    region={regionPlan}
-                    plans={plans}
-                    callback={regions}
-                    setCallback={setRegions}
-                />
             )}
 
             <Card style={{ minHeight: 'calc(-171px + 100vh)' }}>

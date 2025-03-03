@@ -1,10 +1,10 @@
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Button, Col, Drawer, Flex, Form, Input, Row, Space, notification } from 'antd';
+import { Button, Col, Drawer, Flex, Form, Input, InputNumber, Row, Space, notification } from 'antd';
 
 import router from '~/configs/routes';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
-import { controlAuthCreateCloudServerPartner } from '~/services/cloudServer';
+import { requestAuthCreatePartner } from '~/services/app';
 
 const { TextArea } = Input;
 
@@ -15,7 +15,7 @@ function CreatePartner({ open, setOpen, callback, setCallback }) {
     const { pathname } = useLocation();
 
     const handleCreatePartner = async (values) => {
-        const result = await controlAuthCreateCloudServerPartner(values);
+        const result = await requestAuthCreatePartner(values);
 
         if (result.status === 401 || result.status === 403) {
             dispatch(logoutAuthSuccess());
@@ -48,7 +48,12 @@ function CreatePartner({ open, setOpen, callback, setCallback }) {
                 },
             }}
         >
-            <Form layout="vertical" form={form} onFinish={handleCreatePartner} initialValues={{ description: '' }}>
+            <Form
+                layout="vertical"
+                form={form}
+                onFinish={handleCreatePartner}
+                initialValues={{ difference_cloud_server: 0, difference_public_api: 0 }}
+            >
                 <Row gutter={16}>
                     <Col md={12} xs={24}>
                         <Form.Item name="name" label="Tên đối tác" rules={[{ required: true, message: 'Vui lòng nhập tên đối tác' }]}>
@@ -61,31 +66,26 @@ function CreatePartner({ open, setOpen, callback, setCallback }) {
                         </Form.Item>
                     </Col>
                     <Col md={12} xs={24}>
-                        <Form.Item name="key" label="API key" rules={[{ required: true, message: 'Vui lòng nhập API key đối tác' }]}>
-                            <Input placeholder="API key" />
+                        <Form.Item
+                            name="difference_cloud_server"
+                            label="Giá chênh lệch VPS"
+                            rules={[{ required: true, message: 'Vui lòng nhập giá chênh lệch vps' }]}
+                        >
+                            <InputNumber className="w-full" placeholder="Giá chênh lệch VPS" />
                         </Form.Item>
                     </Col>
                     <Col md={12} xs={24}>
                         <Form.Item
-                            name="password"
-                            label="API Password"
-                            rules={[{ required: true, message: 'Vui lòng nhập API Password đối tác' }]}
+                            name="difference_public_api"
+                            label="Giá chênh lệch API"
+                            rules={[{ required: true, message: 'Vui lòng nhập giá chênh lệch API' }]}
                         >
-                            <Input placeholder="API Password" />
-                        </Form.Item>
-                    </Col>
-                    <Col md={12} xs={24}>
-                        <Form.Item
-                            name="node_select"
-                            label="Node Select"
-                            rules={[{ required: true, message: 'Vui lòng nhập Node Select Server' }]}
-                        >
-                            <Input placeholder="Node Select" />
+                            <InputNumber className="w-full" placeholder="Giá chênh lệch API" />
                         </Form.Item>
                     </Col>
                     <Col md={24} xs={24}>
-                        <Form.Item name="description" label="Mô tả">
-                            <TextArea rows={3} placeholder="Nhập mô tả ngắn" />
+                        <Form.Item name="token" label="Token" rules={[{ required: true, message: 'Vui lòng nhập token đối tác' }]}>
+                            <TextArea rows={3} placeholder="Token" />
                         </Form.Item>
                     </Col>
                 </Row>

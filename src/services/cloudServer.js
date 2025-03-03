@@ -1,54 +1,5 @@
 import request from '~/utils';
 
-export const controlAuthGetCloudServerPartner = async () => {
-    try {
-        const res = await request.get('/manages/cloud-server/partners');
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
-export const controlAuthCreateCloudServerPartner = async (data) => {
-    try {
-        const res = await request.post('/manages/cloud-server/partners/create', data);
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
-export const requestAuthUpdateCloudServerPartner = async (id, type, data) => {
-    try {
-        const res = await request.put('/manages/cloud-server/partners/update', data, {
-            params: {
-                type,
-                id,
-            },
-        });
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
-export const requestAuthDestroyCloudServerPartner = async (id) => {
-    try {
-        const res = await request.delete('/manages/cloud-server/partners/destroy', {
-            params: {
-                id,
-            },
-        });
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
 // Region
 export const controlAuthGetCloudServerRegion = async (page, id) => {
     try {
@@ -65,9 +16,9 @@ export const controlAuthGetCloudServerRegion = async (page, id) => {
     }
 };
 
-export const requestAuthCreateCloudServerRegion = async (data) => {
+export const requestAuthAsyncCloudServerRegion = async () => {
     try {
-        const res = await request.post('/manages/cloud-server/regions/create', data);
+        const res = await request.get('/manages/cloud-server/regions/async');
 
         return res.data;
     } catch (error) {
@@ -101,26 +52,6 @@ export const controlAuthDestroyCloudServerRegion = async (id) => {
     }
 };
 
-export const requestAuthAddPlanToCloudServerRegion = async (data) => {
-    try {
-        const res = await request.post('/manages/cloud-server/regions/add-plan', data);
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
-export const requestAuthRemovePlanInCloudServerRegion = async (data) => {
-    try {
-        const res = await request.post('/manages/cloud-server/regions/remove-plan', data);
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
 // Image
 export const controlAuthGetCloudServerImages = async (page) => {
     try {
@@ -136,9 +67,9 @@ export const controlAuthGetCloudServerImages = async (page) => {
     }
 };
 
-export const requestAuthCreateCloudServerImage = async (data) => {
+export const requestAuthAsyncCloudServerImage = async () => {
     try {
-        const res = await request.post('/manages/cloud-server/images/create', data);
+        const res = await request.get('/manages/cloud-server/images/async');
 
         return res.data;
     } catch (error) {
@@ -188,9 +119,9 @@ export const controlAuthGetCloudServerProduct = async (page, id) => {
     }
 };
 
-export const requestAuthCreateCloudServerProduct = async (data) => {
+export const requestAuthAsyncCloudServerProduct = async () => {
     try {
-        const res = await request.post('/manages/cloud-server/products/create', data);
+        const res = await request.get('/manages/cloud-server/products/async');
 
         return res.data;
     } catch (error) {
@@ -220,71 +151,6 @@ export const controlAuthDestroyCloudServerProduct = async (id) => {
                 id,
             },
         });
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
-// Plan
-export const controlAuthGetCloudServerPlans = async (page, id) => {
-    try {
-        const res = await request.get('/manages/cloud-server/plans', {
-            params: {
-                page,
-                id,
-            },
-        });
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
-export const requestAuthCreateCloudServerPlan = async (data) => {
-    try {
-        const res = await request.post('/manages/cloud-server/plans/create', data);
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
-export const requestAuthUpdateCloudServerPlan = async (id, type, data) => {
-    try {
-        const res = await request.put('/manages/cloud-server/plans/update', data, {
-            params: {
-                type,
-                id,
-            },
-        });
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
-export const controlAuthDestroyCloudServerPlan = async (id) => {
-    try {
-        const res = await request.delete('/manages/cloud-server/plans/destroy', {
-            params: {
-                id,
-            },
-        });
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
-export const controlAuthGetInitializeCloudServerPlans = async () => {
-    try {
-        const res = await request.get('/manages/cloud-server/plans/initialize');
 
         return res.data;
     } catch (error) {

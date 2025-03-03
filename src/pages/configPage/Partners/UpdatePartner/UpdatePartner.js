@@ -1,10 +1,10 @@
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Button, Col, Drawer, Flex, Form, Input, Row, Space, notification } from 'antd';
+import { Button, Col, Drawer, Flex, Form, Input, InputNumber, Row, Space, notification } from 'antd';
 
 import router from '~/configs/routes';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
-import { requestAuthUpdateCloudServerPartner } from '~/services/cloudServer';
+import { requestAuthUpdatePartner } from '~/services/app';
 
 const { TextArea } = Input;
 
@@ -19,18 +19,17 @@ function UpdatePartner({ open, setOpen, partner, callback, setCallback }) {
             return notification.error({ message: 'Thông báo', description: 'Không thể lấy được ID đối tác cần cập nhật' });
         }
 
-        const { name, url, api_key, password, node_select, description } = values;
+        const { name, url, token, difference_cloud_server, difference_public_api } = values;
 
         const data = {
             url,
             name,
-            password,
-            description,
-            node_select,
-            key: api_key,
+            token,
+            difference_public_api,
+            difference_cloud_server,
         };
 
-        const result = await requestAuthUpdateCloudServerPartner(partner.key, 'info', data);
+        const result = await requestAuthUpdatePartner(partner.key, 'info', data);
 
         if (result.status === 401 || result.status === 403) {
             dispatch(logoutAuthSuccess());
@@ -38,15 +37,15 @@ function UpdatePartner({ open, setOpen, partner, callback, setCallback }) {
         } else if (result?.status === 200) {
             const clonePartners = [...callback];
 
-            const indexPartner = clonePartners.findIndex((part) => part.key === partner.key);
-            if (indexPartner === -1) {
+            const partnerIndex = clonePartners.findIndex((part) => part.key === partner.key);
+            if (partnerIndex === -1) {
                 return notification.error({
                     message: 'Thông báo',
                     description: 'Không tìm thấy đối tác trong danh sách',
                 });
             }
 
-            clonePartners[indexPartner] = result.data;
+            clonePartners[partnerIndex] = result.data;
             setCallback(clonePartners);
 
             setOpen(false);
@@ -81,10 +80,9 @@ function UpdatePartner({ open, setOpen, partner, callback, setCallback }) {
                 initialValues={{
                     url: partner.url,
                     name: partner.name,
-                    api_key: partner.api_key,
-                    password: partner.password,
-                    description: partner.description,
-                    node_select: partner.node_select,
+                    token: partner.token,
+                    difference_public_api: partner.difference_public_api,
+                    difference_cloud_server: partner.difference_cloud_server,
                 }}
             >
                 <Row gutter={16}>
@@ -99,31 +97,26 @@ function UpdatePartner({ open, setOpen, partner, callback, setCallback }) {
                         </Form.Item>
                     </Col>
                     <Col md={12} xs={24}>
-                        <Form.Item name="api_key" label="API key" rules={[{ required: true, message: 'Vui lòng nhập API key đối tác' }]}>
-                            <Input placeholder="API key" />
+                        <Form.Item
+                            name="difference_cloud_server"
+                            label="Giá chênh lệch VPS"
+                            rules={[{ required: true, message: 'Vui lòng nhập giá chênh lệch vps' }]}
+                        >
+                            <InputNumber className="w-full" placeholder="Giá chênh lệch VPS" />
                         </Form.Item>
                     </Col>
                     <Col md={12} xs={24}>
                         <Form.Item
-                            name="password"
-                            label="API Password"
-                            rules={[{ required: true, message: 'Vui lòng nhập API Password đối tác' }]}
+                            name="difference_public_api"
+                            label="Giá chênh lệch API"
+                            rules={[{ required: true, message: 'Vui lòng nhập giá chênh lệch API' }]}
                         >
-                            <Input placeholder="API Password" />
-                        </Form.Item>
-                    </Col>
-                    <Col md={12} xs={24}>
-                        <Form.Item
-                            name="node_select"
-                            label="Node Select"
-                            rules={[{ required: true, message: 'Vui lòng nhập Node Select Server' }]}
-                        >
-                            <Input placeholder="Node Select" />
+                            <InputNumber className="w-full" placeholder="Giá chênh lệch API" />
                         </Form.Item>
                     </Col>
                     <Col md={24} xs={24}>
-                        <Form.Item name="description" label="Mô tả">
-                            <TextArea rows={3} placeholder="Nhập mô tả ngắn" />
+                        <Form.Item name="token" label="Token" rules={[{ required: true, message: 'Vui lòng nhập token đối tác' }]}>
+                            <TextArea rows={3} placeholder="Token" />
                         </Form.Item>
                     </Col>
                 </Row>
