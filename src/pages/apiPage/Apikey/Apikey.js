@@ -11,7 +11,7 @@ import DetailApikey from './DetailApikey';
 import useDebounce from '~/hooks/useDebounce';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
 import { generateCateString, serviceCopyKeyBoard } from '~/configs';
-import { requestAuthGetApiKeys, requestAuthSearchApikey, requestAuthUpdateApikey } from '~/services/module';
+import { requestAuthGetApiKeys, requestAuthSearchApikey, requestAuthUpdateApikey } from '~/services/api';
 
 function Apikey() {
     const [apiKeys, setApiKeys] = useState([]);
@@ -164,7 +164,7 @@ function Apikey() {
                     </Tooltip>
                     /
                     <Tooltip title="Tổng lượt sử dụng">
-                        <span className="text-info ml-1">{data.use}</span>
+                        <span className="text-info ml-1">{data.used}</span>
                     </Tooltip>
                 </Fragment>
             ),

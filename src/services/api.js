@@ -1,5 +1,48 @@
 import request from '~/utils';
 
+// Apikey
+export const requestAuthGetApiKeys = async (page) => {
+    try {
+        const res = await request.get('/manages/apikey', {
+            params: {
+                page,
+            },
+        });
+
+        return res.data;
+    } catch (error) {
+        return error.response?.data;
+    }
+};
+
+export const requestAuthSearchApikey = async (keyword) => {
+    try {
+        const res = await request.get('/manages/apikey/search', {
+            params: { keyword },
+        });
+
+        return res.data;
+    } catch (error) {
+        return error.response?.data;
+    }
+};
+
+export const requestAuthUpdateApikey = async (type, id, data) => {
+    try {
+        const res = await request.put('/manages/apikey/update', data, {
+            params: {
+                type,
+                id,
+            },
+        });
+
+        return res.data;
+    } catch (error) {
+        return error.response?.data;
+    }
+};
+
+// Public API
 export const requestAuthGetApis = async (page, id) => {
     try {
         const res = await request.get('/manages/apis', {

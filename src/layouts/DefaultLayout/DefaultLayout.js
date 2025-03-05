@@ -80,12 +80,14 @@ const items = [
     getItem('Mã nguồn', 'sub-10', <IconSourceCode />, [
         getItem(<Link to={router.sources_published}>Danh sách</Link>, router.sources_published),
     ]),
-    getItem('Public API', 'sub-12', <IconApi />, [getItem(<Link to={router.apis}>Danh sách</Link>, router.apis)]),
+    getItem('Public API', 'sub-12', <IconApi />, [
+        getItem(<Link to={router.apikey}>Apikey</Link>, router.apikey),
+        getItem(<Link to={router.apis}>Danh sách</Link>, router.apis),
+    ]),
     getItem('Mô-đun khác', 'sub-14', <IconBox />, [
         getItem(<Link to={router.tokens}>Token</Link>, router.tokens),
         getItem(<Link to={router.cycles}>Chu kỳ</Link>, router.cycles),
         getItem(<Link to={router.pricing}>Giá cả</Link>, router.pricing),
-        getItem(<Link to={router.apikey}>Apikey</Link>, router.apikey),
         getItem(<Link to={router.coupon}>Khuyễn mãi</Link>, router.coupon),
     ]),
     getItem('Cấu hình', 'sub-15', <IconSettingsCog />, [

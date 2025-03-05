@@ -5,6 +5,7 @@ import NotFound from '~/layouts/NotFound';
 import Login from '~/layouts/components/Login';
 
 import Apis from '~/pages/apiPage/Apis';
+import ApiKeys from '~/pages/apiPage/Apikey';
 import Account from '~/pages/apiPage/Account';
 import Document from '~/pages/apiPage/Document';
 import Requests from '~/pages/apiPage/Requests';
@@ -22,7 +23,6 @@ import NotificationEmail from '~/pages/notiPage/NotificationEmail';
 import Token from '~/pages/modulePage/Token';
 import Cycles from '~/pages/modulePage/Cycles';
 import Coupon from '~/pages/modulePage/Coupon';
-import ApiKeys from '~/pages/modulePage/Apikey';
 import Pricing from '~/pages/modulePage/Pricing';
 
 import Paygate from '~/pages/configPage/Paygate';

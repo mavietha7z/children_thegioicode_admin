@@ -5,7 +5,7 @@ import { Button, Col, Drawer, Flex, Form, Input, InputNumber, Row, Select, Space
 
 import router from '~/configs/routes';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
-import { requestAuthUpdateApikey } from '~/services/module';
+import { requestAuthUpdateApikey } from '~/services/api';
 
 function DetailApikey({ open, setOpen, apikey, callback, setCallback }) {
     const [loading, setLoading] = useState(false);
@@ -19,7 +19,7 @@ function DetailApikey({ open, setOpen, apikey, callback, setCallback }) {
         setLoading(true);
 
         const data = {
-            use: values.use,
+            used: values.used,
             free_usage: values.free_usage,
         };
 
@@ -78,7 +78,7 @@ function DetailApikey({ open, setOpen, apikey, callback, setCallback }) {
                     form={form}
                     onFinish={handleUpdateApikey}
                     initialValues={{
-                        use: apikey.use,
+                        used: apikey.used,
                         key: apikey.apikey,
                         user: apikey.user.email,
                         service: apikey.service.title,
@@ -146,7 +146,7 @@ function DetailApikey({ open, setOpen, apikey, callback, setCallback }) {
                             </Form.Item>
                         </Col>
                         <Col md={12} xs={24}>
-                            <Form.Item name="use" label="Tổng lượt đã dùng">
+                            <Form.Item name="used" label="Tổng lượt đã dùng">
                                 <InputNumber placeholder="Tổng lượt đã dùng" className="w-full" />
                             </Form.Item>
                         </Col>
