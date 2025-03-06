@@ -1,6 +1,5 @@
-import { SearchOutlined } from '@ant-design/icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Breadcrumb, Button, Card, Flex, Input, Space, Tabs } from 'antd';
+import { Breadcrumb, Button, Card, Flex, Space, Tabs } from 'antd';
 import { IconAdjustmentsCog, IconArrowLeft, IconInfoCircle, IconMailCog } from '@tabler/icons-react';
 
 import router from '~/configs/routes';
@@ -100,9 +99,6 @@ function Setting({ label, keyTab, children }) {
                                 },
                             ]}
                         />
-                    </Flex>
-                    <Flex justify="end" className="responsive-item">
-                        <Input prefix={<SearchOutlined />} style={{ width: 260 }} placeholder="Tìm kiếm" />
                     </Flex>
                 </Flex>
             </Card>

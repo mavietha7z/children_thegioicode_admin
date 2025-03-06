@@ -1,10 +1,9 @@
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { SearchOutlined } from '@ant-design/icons';
 import { Fragment, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { IconArrowLeft, IconFileDescription, IconTemplate, IconTrash } from '@tabler/icons-react';
-import { Card, Spin, Flex, Space, Input, Table, Button, Badge, Tooltip, Popconfirm, Pagination, Breadcrumb, notification } from 'antd';
+import { Card, Spin, Flex, Space, Table, Button, Badge, Tooltip, Popconfirm, Pagination, Breadcrumb, notification } from 'antd';
 
 import router from '~/configs/routes';
 import { convertCurrency } from '~/configs';
@@ -18,7 +17,6 @@ function Invoices() {
     const [invoice, setInvoice] = useState(null);
     const [loading, setLoading] = useState(false);
     const [openOrder, setOpenOrder] = useState(null);
-    const [searchValue, setSearchValue] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [pages, setPages] = useState(1);
@@ -331,15 +329,6 @@ function Invoices() {
                                     title: 'Danh sách hoá đơn',
                                 },
                             ]}
-                        />
-                    </Flex>
-                    <Flex justify="end" className="responsive-item">
-                        <Input
-                            prefix={<SearchOutlined />}
-                            placeholder="Tìm kiếm"
-                            style={{ width: 260 }}
-                            value={searchValue}
-                            onChange={(e) => setSearchValue(e.target.value)}
                         />
                     </Flex>
                 </Flex>

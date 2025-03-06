@@ -1,10 +1,9 @@
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { SearchOutlined } from '@ant-design/icons';
 import { Fragment, useEffect, useState } from 'react';
 import { IconArrowLeft, IconInfoCircleFilled } from '@tabler/icons-react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { Card, Flex, Spin, Space, Table, Button, Tooltip, notification, Breadcrumb, Switch, Input, Pagination } from 'antd';
+import { Card, Flex, Spin, Space, Table, Button, Tooltip, notification, Breadcrumb, Switch, Pagination } from 'antd';
 
 import router from '~/configs/routes';
 import Detail from './MembershipDetail';
@@ -188,10 +187,6 @@ function Membership() {
                                 },
                             ]}
                         />
-                    </Flex>
-
-                    <Flex justify="end" className="responsive-item">
-                        <Input prefix={<SearchOutlined />} placeholder="Tìm kiếm" style={{ width: 260 }} className="mx-3" />
                     </Flex>
                 </Flex>
             </Card>

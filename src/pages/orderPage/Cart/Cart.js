@@ -1,10 +1,9 @@
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { SearchOutlined } from '@ant-design/icons';
 import { Fragment, useEffect, useState } from 'react';
 import { IconArrowLeft, IconShoppingBag } from '@tabler/icons-react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { Card, Flex, Spin, Input, Badge, Space, Table, Button, Switch, Tooltip, Pagination, Breadcrumb, notification } from 'antd';
+import { Card, Flex, Spin, Badge, Space, Table, Button, Switch, Tooltip, Pagination, Breadcrumb, notification } from 'antd';
 
 import CartDetail from './CartDetail';
 import router from '~/configs/routes';
@@ -181,9 +180,6 @@ function Cart() {
                                 },
                             ]}
                         />
-                    </Flex>
-                    <Flex justify="end" className="responsive-item">
-                        <Input prefix={<SearchOutlined />} placeholder="Tìm kiếm" style={{ width: 260 }} />
                     </Flex>
                 </Flex>
             </Card>

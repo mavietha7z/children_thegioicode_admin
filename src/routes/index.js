@@ -33,7 +33,6 @@ import OtherConfig from '~/pages/configPage/Setting/OtherConfig';
 import SettingSendMail from '~/pages/configPage/Setting/SettingSendMail';
 
 import SourcePublished from '~/pages/sourcePage/SourcePublished';
-import SourceUnpublished from '~/pages/sourcePage/SourceUnpublished';
 
 import Invoices from '~/pages/payPage/Invoices';
 
@@ -93,5 +92,4 @@ export const privateRoutes = [
     { path: router.paygates + '/options/:id', component: Options },
     { path: router.cloud_server_product, component: ServerProducts },
     { path: router.notification_email, component: NotificationEmail },
-    { path: router.sources_unpublished, component: SourceUnpublished },
 ];

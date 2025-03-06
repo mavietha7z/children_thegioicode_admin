@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Button, Col, Drawer, Flex, Form, Input, InputNumber, Row, Space, notification } from 'antd';
+import { Button, Col, Drawer, Flex, Form, Input, Row, Space, notification } from 'antd';
 
 import router from '~/configs/routes';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
@@ -19,14 +19,12 @@ function UpdatePartner({ open, setOpen, partner, callback, setCallback }) {
             return notification.error({ message: 'Thông báo', description: 'Không thể lấy được ID đối tác cần cập nhật' });
         }
 
-        const { name, url, token, difference_cloud_server, difference_public_api } = values;
+        const { name, url, token } = values;
 
         const data = {
             url,
             name,
             token,
-            difference_public_api,
-            difference_cloud_server,
         };
 
         const result = await requestAuthUpdatePartner(partner.key, 'info', data);
@@ -81,8 +79,6 @@ function UpdatePartner({ open, setOpen, partner, callback, setCallback }) {
                     url: partner.url,
                     name: partner.name,
                     token: partner.token,
-                    difference_public_api: partner.difference_public_api,
-                    difference_cloud_server: partner.difference_cloud_server,
                 }}
             >
                 <Row gutter={16}>
@@ -94,24 +90,6 @@ function UpdatePartner({ open, setOpen, partner, callback, setCallback }) {
                     <Col md={12} xs={24}>
                         <Form.Item name="url" label="Website url" rules={[{ required: true, message: 'Vui lòng nhập website url' }]}>
                             <Input placeholder="Website url" />
-                        </Form.Item>
-                    </Col>
-                    <Col md={12} xs={24}>
-                        <Form.Item
-                            name="difference_cloud_server"
-                            label="Giá chênh lệch VPS"
-                            rules={[{ required: true, message: 'Vui lòng nhập giá chênh lệch vps' }]}
-                        >
-                            <InputNumber className="w-full" placeholder="Giá chênh lệch VPS" />
-                        </Form.Item>
-                    </Col>
-                    <Col md={12} xs={24}>
-                        <Form.Item
-                            name="difference_public_api"
-                            label="Giá chênh lệch API"
-                            rules={[{ required: true, message: 'Vui lòng nhập giá chênh lệch API' }]}
-                        >
-                            <InputNumber className="w-full" placeholder="Giá chênh lệch API" />
                         </Form.Item>
                     </Col>
                     <Col md={24} xs={24}>

@@ -1,27 +1,10 @@
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
+import { PlusOutlined } from '@ant-design/icons';
 import { Fragment, useEffect, useState } from 'react';
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { IconTrash, IconArrowLeft, IconUsersGroup, IconClipboardText, IconGitPullRequest, IconInfoCircleFilled } from '@tabler/icons-react';
-import {
-    Row,
-    Col,
-    Tag,
-    Card,
-    Flex,
-    Spin,
-    Space,
-    Table,
-    Input,
-    Image,
-    Button,
-    Tooltip,
-    Pagination,
-    Popconfirm,
-    Breadcrumb,
-    notification,
-} from 'antd';
+import { Tag, Card, Flex, Spin, Space, Table, Image, Button, Tooltip, Pagination, Popconfirm, Breadcrumb, notification } from 'antd';
 
 import CreateApi from './CreateApi';
 import DetailApi from './DetailApi';
@@ -289,17 +272,10 @@ function Apis() {
                         />
                     </Flex>
                     <Flex justify="end" className="responsive-item">
-                        <Row style={{ margin: '0 -4px', rowGap: 8 }}>
-                            <Col xs={24} md={16} className="mt-xs-2" style={{ padding: '0 4px' }}>
-                                <Input prefix={<SearchOutlined />} style={{ width: 250 }} className="w-xs-full" placeholder="Tìm kiếm" />
-                            </Col>
-                            <Col xs={24} md={6} className="mt-xs-2" style={{ padding: '0 4px' }}>
-                                <Button className="box-center w-xs-full" type="primary" onClick={() => setOpenCreate(true)}>
-                                    <PlusOutlined />
-                                    Thêm mới
-                                </Button>
-                            </Col>
-                        </Row>
+                        <Button className="box-center w-xs-full" type="primary" onClick={() => setOpenCreate(true)}>
+                            <PlusOutlined />
+                            Thêm mới
+                        </Button>
                     </Flex>
                 </Flex>
             </Card>

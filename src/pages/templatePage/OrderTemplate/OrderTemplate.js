@@ -1,10 +1,9 @@
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { SearchOutlined } from '@ant-design/icons';
 import { Fragment, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { IconTrash, IconArrowLeft, IconInfoCircleFilled } from '@tabler/icons-react';
-import { Card, Flex, Spin, Space, Table, Input, Switch, Button, Tooltip, Popconfirm, Pagination, Breadcrumb, notification } from 'antd';
+import { Card, Flex, Spin, Space, Table, Switch, Button, Tooltip, Popconfirm, Pagination, Breadcrumb, notification } from 'antd';
 
 import router from '~/configs/routes';
 import IconQuestion from '~/assets/icon/IconQuestion';
@@ -284,9 +283,6 @@ function OrderTemplate() {
                                 },
                             ]}
                         />
-                    </Flex>
-                    <Flex justify="end" className="responsive-item">
-                        <Input prefix={<SearchOutlined />} placeholder="Tìm kiếm" style={{ width: 240 }} className="w-xs-full" />
                     </Flex>
                 </Flex>
             </Card>

@@ -1,10 +1,9 @@
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { SearchOutlined } from '@ant-design/icons';
 import { Fragment, useEffect, useState } from 'react';
 import { IconArrowLeft, IconCopy, IconTrash } from '@tabler/icons-react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { Card, Flex, Spin, Space, Table, Input, Button, Tooltip, Breadcrumb, Pagination, Popconfirm, notification } from 'antd';
+import { Card, Flex, Spin, Space, Table, Button, Tooltip, Breadcrumb, Pagination, Popconfirm, notification } from 'antd';
 
 import router from '~/configs/routes';
 import IconQuestion from '~/assets/icon/IconQuestion';
@@ -223,10 +222,6 @@ function Token() {
                                 },
                             ]}
                         />
-                    </Flex>
-
-                    <Flex justify="end" className="responsive-item">
-                        <Input prefix={<SearchOutlined />} style={{ width: 260 }} placeholder="Tìm kiếm" />
                     </Flex>
                 </Flex>
             </Card>

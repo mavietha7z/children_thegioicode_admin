@@ -1,10 +1,9 @@
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { SearchOutlined } from '@ant-design/icons';
 import { Fragment, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { IconArrowLeft, IconChecks, IconFileDescription, IconTrash, IconX } from '@tabler/icons-react';
-import { Breadcrumb, Button, Card, Flex, Input, notification, Pagination, Popconfirm, Space, Spin, Table, Tag, Tooltip } from 'antd';
+import { Breadcrumb, Button, Card, Flex, notification, Pagination, Popconfirm, Space, Spin, Table, Tag, Tooltip } from 'antd';
 
 import router from '~/configs/routes';
 import IconQuestion from '~/assets/icon/IconQuestion';
@@ -24,7 +23,7 @@ function NotificationWeb() {
     const { pathname } = useLocation();
 
     useEffect(() => {
-        document.title = 'Quản trị website - Danh sách thông báo web';
+        document.title = 'Quản trị website - Danh sách thông báo website';
 
         const fetch = async () => {
             setLoading(true);
@@ -214,13 +213,10 @@ function NotificationWeb() {
                                     title: <Link to={router.home}>Trang chủ</Link>,
                                 },
                                 {
-                                    title: 'Thông báo web',
+                                    title: 'Thông báo website',
                                 },
                             ]}
                         />
-                    </Flex>
-                    <Flex justify="end" className="responsive-item">
-                        <Input prefix={<SearchOutlined />} placeholder="Tìm kiếm" style={{ width: 260 }} className="mx-3" />
                     </Flex>
                 </Flex>
             </Card>

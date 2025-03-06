@@ -1,10 +1,9 @@
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { SearchOutlined } from '@ant-design/icons';
 import { Fragment, useEffect, useState } from 'react';
 import { IconArrowLeft, IconTrash } from '@tabler/icons-react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { Card, Spin, Flex, Space, Input, Table, Pagination, Button, Breadcrumb, notification, Tooltip, Popconfirm } from 'antd';
+import { Card, Spin, Flex, Space, Table, Pagination, Button, Breadcrumb, notification, Tooltip, Popconfirm } from 'antd';
 
 import router from '~/configs/routes';
 import { convertCurrency } from '~/configs';
@@ -14,7 +13,6 @@ import { requestAuthDestroyWalletHistory, requestAuthGetWalletHistories } from '
 
 function WalletHistory() {
     const [loading, setLoading] = useState(false);
-    const [searchValue, setSearchValue] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
     const [walletHistories, setWalletHistories] = useState([]);
 
@@ -221,15 +219,6 @@ function WalletHistory() {
                                     title: 'Biến động số dư',
                                 },
                             ]}
-                        />
-                    </Flex>
-                    <Flex justify="end" className="responsive-item">
-                        <Input
-                            prefix={<SearchOutlined />}
-                            placeholder="Tìm kiếm"
-                            style={{ width: 260 }}
-                            value={searchValue}
-                            onChange={(e) => setSearchValue(e.target.value)}
                         />
                     </Flex>
                 </Flex>
