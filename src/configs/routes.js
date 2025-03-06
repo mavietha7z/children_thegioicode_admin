@@ -2,7 +2,6 @@ const apis = '/apis';
 const users = '/users';
 const cloud = '/cloud';
 const wallets = '/wallets';
-const sources = '/sources';
 const settings = '/settings';
 const templates = '/templates';
 const histories = '/histories';
@@ -24,6 +23,7 @@ const router = {
     apikey: '/apikey',
     coupon: '/coupon',
     pricing: '/pricing',
+    sources: '/sources',
     paygates: '/paygates',
     invoices: '/invoices',
     partners: '/partners',
@@ -38,7 +38,6 @@ const router = {
     notification_web: '/notification-web',
     wallets_histories: wallets + histories,
     templates_orders: templates + '/orders',
-    sources_published: sources + '/published',
     localbank_histories: localbank + histories,
     users_histories: users + '/login-histories',
     cloud_server_image: cloud + '-server/images',

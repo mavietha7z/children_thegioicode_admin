@@ -169,7 +169,7 @@ function CreateSource({ open, setOpen, callback, setCallback }) {
                         </Form.Item>
                     </Col>
                     <Col md={12} xs={24}>
-                        <Form.Item name="version" label="Phiên bản" rules={[{ required: true, message: 'Vui lòng nhập phiên bản' }]}>
+                        <Form.Item name="version" label="Phiên bản">
                             <Input placeholder="Phiên bản mã nguồn" />
                         </Form.Item>
                     </Col>

@@ -1,11 +1,10 @@
 import request from '~/utils';
 
-export const requestAuthGetSources = async (page, type, id) => {
+export const requestAuthGetSources = async (page, id) => {
     try {
         const res = await request.get('/manages/sources', {
             params: {
                 page,
-                type,
                 id,
             },
         });
@@ -46,20 +45,6 @@ export const requestAuthUpdateSource = async (id, type, data) => {
             params: {
                 type,
                 id,
-            },
-        });
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
-export const requestAuthSearchSource = async (code) => {
-    try {
-        const res = await request.get('/manages/sources/search', {
-            params: {
-                code,
             },
         });
 

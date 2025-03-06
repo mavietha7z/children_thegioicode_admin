@@ -3,16 +3,33 @@ import { useDispatch } from 'react-redux';
 import { PlusOutlined } from '@ant-design/icons';
 import { Fragment, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { IconArrowLeft, IconCoin, IconInfoCircleFilled, IconTrash } from '@tabler/icons-react';
-import { Card, Flex, Spin, Space, Table, Image, Button, Switch, Tooltip, Pagination, Popconfirm, Breadcrumb, notification } from 'antd';
+import { IconArrowLeft, IconCoin, IconInfoCircleFilled, IconPlus, IconTrash } from '@tabler/icons-react';
+import {
+    Card,
+    Flex,
+    Spin,
+    Space,
+    Table,
+    Image,
+    Badge,
+    Button,
+    Switch,
+    Tooltip,
+    Pagination,
+    Popconfirm,
+    Breadcrumb,
+    notification,
+} from 'antd';
 
 import router from '~/configs/routes';
 import CreateTemplate from './CreateTemplate';
-import TemplateDetail from './TemplateDetail';
+import UpdateTemplate from './UpdateTemplate';
 import { generateCateString } from '~/configs';
 import IconQuestion from '~/assets/icon/IconQuestion';
+import DrawerPricing from '~/components/DrawerPricing';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
 import imageNotFound from '~/assets/image/image_not.jpg';
+import { requestAuthCreatePricing } from '~/services/module';
 import { requestAuthDestroyTemplate, requestAuthGetTemplates, requestAuthUpdateTemplate } from '~/services/template';
 
 function Template() {
@@ -21,6 +38,7 @@ function Template() {
     const [templates, setTemplates] = useState([]);
     const [openCreate, setOpenCreate] = useState(false);
     const [openUpdate, setOpenUpdate] = useState(false);
+    const [openPricing, setOpenPricing] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [pages, setPages] = useState(1);
@@ -57,6 +75,73 @@ function Template() {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, id]);
+
+    const handleCreatePricing = async (values) => {
+        const {
+            price,
+            discount,
+            cycles_id,
+            other_fees,
+            penalty_fee,
+            renewal_fee,
+            upgrade_fee,
+            bonus_point,
+            creation_fee,
+            brokerage_fee,
+            original_price,
+            cancellation_fee,
+        } = values;
+
+        const data = {
+            price,
+            discount,
+            cycles_id,
+            other_fees,
+            bonus_point,
+            penalty_fee,
+            renewal_fee,
+            upgrade_fee,
+            creation_fee,
+            brokerage_fee,
+            original_price,
+            cancellation_fee,
+            service_id: template.key,
+            service_type: 'Template',
+        };
+
+        const result = await requestAuthCreatePricing(data);
+
+        if (result.status === 401 || result.status === 403) {
+            dispatch(logoutAuthSuccess());
+            navigate(`${router.login}?redirect_url=${pathname}`);
+        } else if (result?.status === 200) {
+            const cloneTemplates = [...templates];
+
+            const templateIndex = cloneTemplates.findIndex((tem) => tem.key === template.key);
+            if (templateIndex === -1) {
+                return notification.error({
+                    message: 'Thông báo',
+                    description: 'Không tìm thấy mẫu website trong danh sách',
+                });
+            }
+
+            cloneTemplates[templateIndex].pricing += 1;
+
+            setTemplate(null);
+            setOpenPricing(false);
+            setTemplates(cloneTemplates);
+
+            notification.success({
+                message: 'Thông báo',
+                description: result.message,
+            });
+        } else {
+            notification.error({
+                message: 'Thông báo',
+                description: result?.error || 'Lỗi hệ thống vui lòng thử lại sau',
+            });
+        }
+    };
 
     const handleToggleStatusTemplate = async (id) => {
         if (!id) {
@@ -210,10 +295,25 @@ function Template() {
                     </Tooltip>
                     <Tooltip title="Giá cả">
                         <Link to={`${router.pricing}?service_id=${data.key}`} target="_blank">
-                            <Button className="box-center" type="primary" size="small">
-                                <IconCoin size={18} />
-                            </Button>
+                            <Badge count={data.pricing} size="small">
+                                <Button className="box-center" type="primary" size="small">
+                                    <IconCoin size={18} />
+                                </Button>
+                            </Badge>
                         </Link>
+                    </Tooltip>
+                    <Tooltip title="Thêm giá">
+                        <Button
+                            className="box-center"
+                            type="primary"
+                            size="small"
+                            onClick={() => {
+                                setTemplate(data);
+                                setOpenPricing(true);
+                            }}
+                        >
+                            <IconPlus size={18} />
+                        </Button>
                     </Tooltip>
                     <Tooltip title="Xoá">
                         <Popconfirm
@@ -269,9 +369,10 @@ function Template() {
                 </Flex>
             </Card>
 
+            {openPricing && <DrawerPricing open={openPricing} setOpen={setOpenPricing} onClick={handleCreatePricing} />}
             {openCreate && <CreateTemplate open={openCreate} setOpen={setOpenCreate} callback={templates} setCallback={setTemplates} />}
             {openUpdate && template && (
-                <TemplateDetail
+                <UpdateTemplate
                     open={openUpdate}
                     setOpen={setOpenUpdate}
                     template={template}

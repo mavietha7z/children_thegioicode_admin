@@ -30,7 +30,7 @@ import SettingInfo from '~/pages/configPage/Setting/SettingInfo';
 import OtherConfig from '~/pages/configPage/Setting/OtherConfig';
 import SettingSendMail from '~/pages/configPage/Setting/SettingSendMail';
 
-import SourcePublished from '~/pages/sourcePage/SourcePublished';
+import Sources from '~/pages/sourcePage/Sources';
 
 import Invoices from '~/pages/payPage/Invoices';
 
@@ -60,6 +60,7 @@ export const privateRoutes = [
     { path: router.cycles, component: Cycles },
     { path: router.orders, component: Orders },
     { path: router.apikey, component: ApiKeys },
+    { path: router.sources, component: Sources },
     { path: router.pricing, component: Pricing },
     { path: router.wallets, component: Wallets },
     { path: router.paygates, component: Paygate },
@@ -83,7 +84,6 @@ export const privateRoutes = [
     { path: router.notification_web, component: NotificationWeb },
     { path: router.cloud_server_orders, component: ServerOrders },
     { path: router.cloud_server_region, component: ServerRegions },
-    { path: router.sources_published, component: SourcePublished },
     { path: router.paygates + '/options/:id', component: Options },
     { path: router.cloud_server_product, component: ServerProducts },
 ];

@@ -39,7 +39,7 @@ function DrawerPricing({ open, setOpen, onClick }) {
     return (
         <Drawer
             title="Thông tin giá cả"
-            width={600}
+            width={820}
             onClose={() => setOpen(false)}
             open={open}
             styles={{

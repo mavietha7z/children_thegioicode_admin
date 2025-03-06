@@ -119,16 +119,16 @@ function CreateTemplate({ open, setOpen, callback, setCallback }) {
                 layout="vertical"
                 form={form}
                 onFinish={handleCreateTemplate}
-                initialValues={{ demo_url: '', priority: 1, view_count: 0, create_count: 0, description: '' }}
+                initialValues={{ demo_url: '', priority: 1, view_count: 0, create_count: 0, description: '', version: '' }}
             >
                 <Row gutter={16}>
                     <Col md={12} xs={24}>
-                        <Form.Item name="title" label="Tiêu đề" rules={[{ required: true, message: 'Vui lòng nhập tiêu đề template' }]}>
-                            <Input placeholder="Tiêu đề template" />
+                        <Form.Item name="title" label="Tiêu đề" rules={[{ required: true, message: 'Vui lòng nhập tiêu đề mẫu' }]}>
+                            <Input placeholder="Tiêu đề mẫu" />
                         </Form.Item>
                     </Col>
                     <Col md={12} xs={24}>
-                        <Form.Item name="version" label="Phiên bản" rules={[{ required: true, message: 'Vui lòng nhập phiên bản' }]}>
+                        <Form.Item name="version" label="Phiên bản">
                             <Input placeholder="Phiên bản" />
                         </Form.Item>
                     </Col>

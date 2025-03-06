@@ -1,20 +1,19 @@
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { PlusOutlined } from '@ant-design/icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Col, Drawer, Flex, Form, Image, Input, InputNumber, Row, Space, Upload, notification } from 'antd';
 
 import { urlUpload } from '~/utils';
 import router from '~/configs/routes';
-import ModuleTemplate from '../ModuleTemplate';
-import { PlusOutlined } from '@ant-design/icons';
+import { checkImage, configGetBase64 } from '~/configs';
 import imageNotFound from '~/assets/image/image_not.jpg';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
-import { checkImage, configGetBase64 } from '~/configs';
-import { requestAuthUpdateTemplate } from '~/services/template';
+import { requestAuthUpdateSource } from '~/services/source';
 
 const { TextArea } = Input;
 
-function TemplateDetail({ open, setOpen, template, callback, setCallback }) {
+function UpdateSource({ open, setOpen, source, callback, setCallback }) {
     const [imageUrl, setImageUrl] = useState([]);
     const [imageMeta, setImageMeta] = useState([]);
 
@@ -32,7 +31,7 @@ function TemplateDetail({ open, setOpen, template, callback, setCallback }) {
     useEffect(() => {
         const fetch = async () => {
             try {
-                const url = await checkImage(template.image_url);
+                const url = await checkImage(source.image_url);
 
                 const filename = url.split('/').pop();
                 const [name, extension] = filename.split('.');
@@ -43,7 +42,7 @@ function TemplateDetail({ open, setOpen, template, callback, setCallback }) {
             }
 
             const imageMeta = await Promise.all(
-                template.image_meta.map(async (item, index) => {
+                source.image_meta.map(async (item, index) => {
                     const filename = item.split('/').pop();
                     const [name, extension] = filename.split('.');
 
@@ -67,21 +66,6 @@ function TemplateDetail({ open, setOpen, template, callback, setCallback }) {
             );
 
             setImageMeta(imageMeta);
-
-            const newModules = template.modules.map((module) => {
-                return {
-                    modun: module.modun,
-                    content: module.content,
-                    include: module.include,
-                    description: module.description.map((desc) => {
-                        return {
-                            desc,
-                        };
-                    }),
-                };
-            });
-
-            form.setFieldValue('modules', newModules);
         };
         fetch();
 
@@ -111,24 +95,11 @@ function TemplateDetail({ open, setOpen, template, callback, setCallback }) {
         setImageUrl(newFileList);
     };
 
-    const handleUpdateTemplate = async (values) => {
-        if (!template.key) {
+    const handleUpdateSource = async (values) => {
+        if (!source.key) {
             return notification.error({
                 message: 'Thông báo',
-                description: 'Không lấy được ID template cần cập nhật',
-            });
-        }
-        const { ratings, modules: valueModules, ...other } = values;
-
-        let modules = [];
-        if (valueModules) {
-            modules = valueModules.map((value) => {
-                return {
-                    modun: value.modun,
-                    include: value.include,
-                    content: value.content,
-                    description: value.description.map((desc) => desc.desc),
-                };
+                description: 'Không lấy được ID mã nguồn cần cập nhật',
             });
         }
 
@@ -136,34 +107,33 @@ function TemplateDetail({ open, setOpen, template, callback, setCallback }) {
         let data = {
             image_url: '',
             image_meta,
-            modules,
-            ...other,
+            ...values,
         };
-        let image_url = imageUrl.map((image) => image.url || image.response.data);
 
+        let image_url = imageUrl.map((image) => image.url || image.response.data);
         if (image_url.length > 0) {
             data.image_url = image_url[0];
         }
 
-        const result = await requestAuthUpdateTemplate(template.key, 'info', data);
+        const result = await requestAuthUpdateSource(source.key, 'info', data);
 
         if (result.status === 401 || result.status === 403) {
             dispatch(logoutAuthSuccess());
             navigate(`${router.login}?redirect_url=${pathname}`);
         } else if (result?.status === 200) {
-            const cloneTemplates = [...callback];
+            const cloneSources = [...callback];
 
-            const indexTemplate = cloneTemplates.findIndex((tem) => tem.key === template.key);
-            if (indexTemplate === -1) {
+            const indexSource = cloneSources.findIndex((s) => s.key === source.key);
+            if (indexSource === -1) {
                 return notification.error({
                     message: 'Thông báo',
-                    description: 'Không tìm thấy template trong danh sách',
+                    description: 'Không tìm thấy mã nguồn trong danh sách',
                 });
             }
 
-            cloneTemplates[indexTemplate] = result.data;
-            cloneTemplates.sort((a, b) => a.priority - b.priority);
-            setCallback(cloneTemplates);
+            cloneSources[indexSource] = result.data;
+            cloneSources.sort((a, b) => a.priority - b.priority);
+            setCallback(cloneSources);
 
             setOpen(false);
             notification.success({
@@ -180,7 +150,7 @@ function TemplateDetail({ open, setOpen, template, callback, setCallback }) {
 
     return (
         <Drawer
-            title="Chi tiết template"
+            title="Chi tiết mã nguồn"
             width={820}
             onClose={() => setOpen(false)}
             open={open}
@@ -193,16 +163,17 @@ function TemplateDetail({ open, setOpen, template, callback, setCallback }) {
             <Form
                 layout="vertical"
                 form={form}
-                onFinish={handleUpdateTemplate}
+                onFinish={handleUpdateSource}
                 initialValues={{
-                    title: template.title,
-                    slug_url: template.slug_url,
-                    version: template.version,
-                    demo_url: template.demo_url,
-                    priority: template.priority,
-                    view_count: template.view_count,
-                    create_count: template.create_count,
-                    description: template.description,
+                    title: source.title,
+                    slug_url: source.slug_url,
+                    data_url: source.data_url,
+                    demo_url: source.demo_url,
+                    version: source.version,
+                    priority: source.priority,
+                    view_count: source.view_count,
+                    purchase_count: source.purchase_count,
+                    description: source.description,
                 }}
             >
                 <Row gutter={16}>
@@ -217,8 +188,8 @@ function TemplateDetail({ open, setOpen, template, callback, setCallback }) {
                         </Form.Item>
                     </Col>
                     <Col md={12} xs={24}>
-                        <Form.Item name="version" label="Phiên bản" rules={[{ required: true, message: 'Vui lòng nhập phiên bản' }]}>
-                            <Input placeholder="Phiên bản" />
+                        <Form.Item name="data_url" label="Data url">
+                            <Input placeholder="Data url" />
                         </Form.Item>
                     </Col>
                     <Col md={12} xs={24}>
@@ -226,29 +197,30 @@ function TemplateDetail({ open, setOpen, template, callback, setCallback }) {
                             <Input placeholder="Demo url" />
                         </Form.Item>
                     </Col>
-                    <Col md={8} xs={24}>
+                    <Col md={6} xs={24}>
+                        <Form.Item name="version" label="Phiên bản" rules={[{ required: true, message: 'Vui lòng nhập phiên bản' }]}>
+                            <Input placeholder="Phiên bản" />
+                        </Form.Item>
+                    </Col>
+                    <Col md={6} xs={24}>
                         <Form.Item name="priority" label="Sắp xếp">
                             <InputNumber className="w-full" placeholder="Sắp xếp" />
                         </Form.Item>
                     </Col>
-                    <Col md={8} xs={24}>
+                    <Col md={6} xs={24}>
                         <Form.Item name="view_count" label="Lượt xem">
                             <InputNumber className="w-full" placeholder="Lượt xem" />
                         </Form.Item>
                     </Col>
-                    <Col md={8} xs={24}>
-                        <Form.Item name="create_count" label="Lượt tạo">
-                            <InputNumber className="w-full" placeholder="Lượt tạo" />
+                    <Col md={6} xs={24}>
+                        <Form.Item name="purchase_count" label="Lượt mua">
+                            <InputNumber className="w-full" placeholder="Lượt mua" />
                         </Form.Item>
                     </Col>
                     <Col span={24}>
                         <Form.Item name="description" label="Mô tả chi tiết">
                             <TextArea rows={3} placeholder="Nhập mô tả chi tiết" />
                         </Form.Item>
-                    </Col>
-
-                    <Col span={24}>
-                        <ModuleTemplate />
                     </Col>
                     <Col md={12} xs={24}>
                         <Form.Item label="Ảnh" name="image_url">
@@ -342,4 +314,4 @@ function TemplateDetail({ open, setOpen, template, callback, setCallback }) {
         </Drawer>
     );
 }
-export default TemplateDetail;
+export default UpdateSource;

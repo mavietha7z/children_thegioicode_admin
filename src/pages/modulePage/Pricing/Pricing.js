@@ -1,13 +1,11 @@
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { PlusOutlined } from '@ant-design/icons';
 import { Fragment, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { IconArrowLeft, IconInfoCircleFilled, IconTrash } from '@tabler/icons-react';
 import { Card, Flex, Spin, Space, Table, Button, Switch, Tooltip, Breadcrumb, Pagination, Popconfirm, notification } from 'antd';
 
 import router from '~/configs/routes';
-import CreatePricing from './CreatePricing';
 import UpdatePricing from './UpdatePricing';
 import { convertCurrency } from '~/configs';
 import IconQuestion from '~/assets/icon/IconQuestion';
@@ -18,7 +16,6 @@ function Pricing() {
     const [pricings, setPricings] = useState([]);
     const [pricing, setPricing] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [openCreate, setOpenCreate] = useState(false);
     const [openDetail, setOpenDetail] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -148,7 +145,7 @@ function Pricing() {
             render: (data) => {
                 let routerPath = '';
                 if (data.service_type === 'Source') {
-                    routerPath = router.sources_published;
+                    routerPath = router.sources;
                 }
                 if (data.service_type === 'Template') {
                     routerPath = router.templates;
@@ -301,17 +298,9 @@ function Pricing() {
                             ]}
                         />
                     </Flex>
-
-                    <Flex justify="end" className="responsive-item">
-                        <Button className="box-center w-xs-full" type="primary" onClick={() => setOpenCreate(true)}>
-                            <PlusOutlined />
-                            Thêm mới
-                        </Button>
-                    </Flex>
                 </Flex>
             </Card>
 
-            {openCreate && <CreatePricing open={openCreate} setOpen={setOpenCreate} callback={pricings} setCallback={setPricings} />}
             {openDetail && pricing && (
                 <UpdatePricing open={openDetail} setOpen={setOpenDetail} pricing={pricing} callback={pricings} setCallback={setPricings} />
             )}

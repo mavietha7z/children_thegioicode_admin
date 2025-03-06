@@ -7,8 +7,8 @@ import { IconArrowLeft, IconCoin, IconInfoCircleFilled, IconPlus, IconTrash } fr
 import { Card, Flex, Spin, Space, Table, Badge, Button, Switch, Tooltip, Pagination, Popconfirm, Breadcrumb, notification } from 'antd';
 
 import router from '~/configs/routes';
-import CreateSource from '../CreateSource';
-import SourceDetail from '../SourceDetail';
+import CreateSource from './CreateSource';
+import UpdateSource from './UpdateSource';
 import { generateCateString } from '~/configs';
 import IconQuestion from '~/assets/icon/IconQuestion';
 import DrawerPricing from '~/components/DrawerPricing';
@@ -16,7 +16,7 @@ import { logoutAuthSuccess } from '~/redux/reducer/auth';
 import { requestAuthCreatePricing } from '~/services/module';
 import { requestAuthDestroySource, requestAuthGetSources, requestAuthUpdateSource } from '~/services/source';
 
-function SourcePublished() {
+function Sources() {
     const [source, setSource] = useState(null);
     const [sources, setSources] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -40,7 +40,7 @@ function SourcePublished() {
         setLoading(true);
 
         const fetch = async () => {
-            const result = await requestAuthGetSources(page, 'published', id);
+            const result = await requestAuthGetSources(page, id);
 
             if (result.status === 401 || result.status === 403) {
                 dispatch(logoutAuthSuccess());
@@ -72,7 +72,7 @@ function SourcePublished() {
             dispatch(logoutAuthSuccess());
             navigate(`${router.login}?redirect_url=${pathname}`);
         } else if (result?.status === 200) {
-            let cloneSources = [...sources];
+            const cloneSources = [...sources];
 
             const indexSource = cloneSources.findIndex((source) => source.key === id);
             if (indexSource === -1) {
@@ -82,13 +82,7 @@ function SourcePublished() {
                 });
             }
 
-            if (type === 'published') {
-                cloneSources.splice(indexSource, 1);
-            }
-            if (type === 'status') {
-                cloneSources[indexSource].status = !cloneSources[indexSource].status;
-            }
-
+            cloneSources[indexSource].status = !cloneSources[indexSource].status;
             setSources(cloneSources);
 
             notification.success({
@@ -248,18 +242,6 @@ function SourcePublished() {
             ),
         },
         {
-            title: 'Xuất bản',
-            key: 'published',
-            render: (data) => (
-                <Switch
-                    checkedChildren="Bật"
-                    unCheckedChildren="Tắt"
-                    value={data.published}
-                    onChange={() => handleToggleSource(data.key, 'published')}
-                />
-            ),
-        },
-        {
             title: 'Trạng thái',
             key: 'status',
             render: (data) => (
@@ -373,7 +355,7 @@ function SourcePublished() {
             {openPricing && <DrawerPricing open={openPricing} setOpen={setOpenPricing} onClick={handleCreatePricing} />}
             {openCreate && <CreateSource open={openCreate} setOpen={setOpenCreate} callback={sources} setCallback={setSources} />}
             {openUpdate && source && (
-                <SourceDetail open={openUpdate} setOpen={setOpenUpdate} source={source} callback={sources} setCallback={setSources} />
+                <UpdateSource open={openUpdate} setOpen={setOpenUpdate} source={source} callback={sources} setCallback={setSources} />
             )}
 
             <Card style={{ minHeight: 'calc(-171px + 100vh)' }}>
@@ -403,4 +385,4 @@ function SourcePublished() {
     );
 }
 
-export default SourcePublished;
+export default Sources;

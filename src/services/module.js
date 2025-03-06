@@ -140,21 +140,6 @@ export const requestAuthDestroyPricing = async (id) => {
     }
 };
 
-export const requestAuthSearchPricing = async (type, keyword) => {
-    try {
-        const res = await request.get('/manages/pricings/search', {
-            params: {
-                type,
-                keyword,
-            },
-        });
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
 export const requestAuthCreatePricing = async (data) => {
     try {
         const res = await request.post('/manages/pricings/create', data);
