@@ -1,15 +1,14 @@
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
+import { IconArrowLeft } from '@tabler/icons-react';
 import { Fragment, useEffect, useState } from 'react';
-import { IconArrowLeft, IconTrash } from '@tabler/icons-react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { Card, Spin, Flex, Space, Table, Pagination, Button, Breadcrumb, notification, Tooltip, Popconfirm } from 'antd';
+import { Card, Spin, Flex, Space, Table, Pagination, Button, Breadcrumb, notification } from 'antd';
 
 import router from '~/configs/routes';
 import { convertCurrency } from '~/configs';
-import IconQuestion from '~/assets/icon/IconQuestion';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
-import { requestAuthDestroyWalletHistory, requestAuthGetWalletHistories } from '~/services/wallet';
+import { requestAuthGetWalletHistories } from '~/services/wallet';
 
 function WalletHistory() {
     const [loading, setLoading] = useState(false);
@@ -48,45 +47,6 @@ function WalletHistory() {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page]);
-
-    const confirmDestroyWalletHistory = async (id) => {
-        if (!id) {
-            return notification.error({
-                message: 'Thông báo',
-                description: 'Không lấy được ID biến động số dư cần xoá',
-            });
-        }
-
-        const result = await requestAuthDestroyWalletHistory(id);
-
-        if (result.status === 401 || result.status === 403) {
-            dispatch(logoutAuthSuccess());
-            navigate(`${router.login}?redirect_url=${pathname}`);
-        } else if (result?.status === 200) {
-            const cloneWalletHistories = [...walletHistories];
-
-            const indexWalletHistory = cloneWalletHistories.findIndex((item) => item.key === id);
-            if (indexWalletHistory === -1) {
-                return notification.error({
-                    message: 'Thông báo',
-                    description: 'Không tìm thấy biến động số dư trong danh sách',
-                });
-            }
-
-            cloneWalletHistories.splice(indexWalletHistory, 1);
-            setWalletHistories(cloneWalletHistories);
-
-            notification.success({
-                message: 'Thông báo',
-                description: result.message,
-            });
-        } else {
-            notification.error({
-                message: 'Thông báo',
-                description: result?.error || 'Lỗi hệ thống vui lòng thử lại sau',
-            });
-        }
-    };
 
     const columns = [
         {
@@ -176,28 +136,6 @@ function WalletHistory() {
                     <br />
                     <span>{moment(data.updated_at).format('DD/MM/YYYY HH:mm:ss')}</span>
                 </Fragment>
-            ),
-        },
-        {
-            title: 'Hành động',
-            key: 'action',
-            render: (data) => (
-                <Flex align="center" gap={12}>
-                    <Tooltip title="Xoá">
-                        <Popconfirm
-                            title="Delete?"
-                            description={`#${data.id}`}
-                            onConfirm={() => confirmDestroyWalletHistory(data.key)}
-                            okText="Xoá"
-                            cancelText="Huỷ"
-                            icon={<IconQuestion width={14} height={14} className="mt-1 mr-1" style={{ color: '#ff4d4f' }} />}
-                        >
-                            <Button danger type="primary" size="small" className="box-center">
-                                <IconTrash size={18} />
-                            </Button>
-                        </Popconfirm>
-                    </Tooltip>
-                </Flex>
             ),
         },
     ];

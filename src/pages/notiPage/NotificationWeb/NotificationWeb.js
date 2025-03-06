@@ -23,7 +23,7 @@ function NotificationWeb() {
     const { pathname } = useLocation();
 
     useEffect(() => {
-        document.title = 'Quản trị website - Danh sách thông báo website';
+        document.title = 'Quản trị website - Danh sách thông báo';
 
         const fetch = async () => {
             setLoading(true);
@@ -213,7 +213,7 @@ function NotificationWeb() {
                                     title: <Link to={router.home}>Trang chủ</Link>,
                                 },
                                 {
-                                    title: 'Thông báo website',
+                                    title: 'Thông báo',
                                 },
                             ]}
                         />

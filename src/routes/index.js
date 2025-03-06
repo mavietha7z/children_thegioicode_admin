@@ -17,7 +17,6 @@ import Membership from '~/pages/accountPage/Membership';
 import LoginHistory from '~/pages/accountPage/LoginHistory';
 
 import NotificationWeb from '~/pages/notiPage/NotificationWeb';
-import NotificationEmail from '~/pages/notiPage/NotificationEmail';
 
 import Token from '~/pages/modulePage/Token';
 import Cycles from '~/pages/modulePage/Cycles';
@@ -36,7 +35,6 @@ import SourcePublished from '~/pages/sourcePage/SourcePublished';
 import Invoices from '~/pages/payPage/Invoices';
 
 import Wallets from '~/pages/walletPage/Wallets';
-import Withdrawal from '~/pages/walletPage/Withdrawal';
 import BonusPoint from '~/pages/walletPage/BonusPoint';
 import WalletHistory from '~/pages/walletPage/WalletHistory';
 
@@ -75,7 +73,6 @@ export const privateRoutes = [
     { path: router.settings_info, component: SettingInfo },
     { path: router.settings_other, component: OtherConfig },
     { path: router.users_histories, component: LoginHistory },
-    { path: router.wallets_withdrawal, component: Withdrawal },
     { path: router.apis_players + '/:id', component: Account },
     { path: router.templates_orders, component: OrderTemplate },
     { path: router.settings_email, component: SettingSendMail },
@@ -89,5 +86,4 @@ export const privateRoutes = [
     { path: router.sources_published, component: SourcePublished },
     { path: router.paygates + '/options/:id', component: Options },
     { path: router.cloud_server_product, component: ServerProducts },
-    { path: router.notification_email, component: NotificationEmail },
 ];

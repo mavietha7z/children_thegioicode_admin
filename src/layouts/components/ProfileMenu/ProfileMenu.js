@@ -59,7 +59,7 @@ function ProfileMenu() {
                         <span className="profile__menu-title">Quản lý ví</span>
                     </li>
                 </Link>
-                <Link to={router.notification_web} className="w-full">
+                <Link to={router.wallets_histories} className="w-full">
                     <li className="profile__menu-item">
                         <IconBalance width={18} height={18} />
                         <span className="profile__menu-title">Biến động số dư</span>

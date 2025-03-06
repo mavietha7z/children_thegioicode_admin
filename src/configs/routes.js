@@ -4,7 +4,6 @@ const cloud = '/cloud';
 const wallets = '/wallets';
 const sources = '/sources';
 const settings = '/settings';
-const resources = '/resources';
 const templates = '/templates';
 const histories = '/histories';
 const localbank = '/localbank';
@@ -16,7 +15,6 @@ const router = {
     wallets,
     templates,
     localbank,
-    resources,
     home: '/',
     cart: '/cart',
     login: '/login',
@@ -29,8 +27,6 @@ const router = {
     paygates: '/paygates',
     invoices: '/invoices',
     partners: '/partners',
-    databases: '/databases',
-    news_feeds: '/news-feeds',
     memberships: '/memberships',
     apis_players: apis + '/players',
     cloud_server: cloud + '/server',
@@ -43,15 +39,10 @@ const router = {
     wallets_histories: wallets + histories,
     templates_orders: templates + '/orders',
     sources_published: sources + '/published',
-    notification_email: '/notification-email',
     localbank_histories: localbank + histories,
     users_histories: users + '/login-histories',
-    resources_products: resources + '/products',
-    resources_accounts: resources + '/accounts',
-    wallets_withdrawal: wallets + '/withdrawal',
     cloud_server_image: cloud + '-server/images',
     cloud_server_orders: cloud + '-server/orders',
-    sources_unpublished: sources + '/unpublished',
     cloud_server_region: cloud + '-server/regions',
     wallets_bonus_points: wallets + '/bonus-points',
     cloud_server_product: cloud + '-server/products',

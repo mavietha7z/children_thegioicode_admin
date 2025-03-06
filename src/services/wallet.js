@@ -55,20 +55,6 @@ export const requestAuthGetWalletHistories = async (page) => {
     }
 };
 
-export const requestAuthDestroyWalletHistory = async (id) => {
-    try {
-        const res = await request.delete('/manages/wallets/histories/destroy', {
-            params: {
-                id,
-            },
-        });
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
 export const requestAuthGetBonusPoints = async (page) => {
     try {
         const res = await request.get('/manages/bonus-points', {
