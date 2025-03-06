@@ -173,43 +173,9 @@ export const controlAuthGetCloudServerOrder = async (page) => {
     }
 };
 
-export const controlAuthDestroyCloudServerOrder = async (id) => {
+export const requestAuthAsyncCloudServerOrder = async () => {
     try {
-        const res = await request.delete('/manages/cloud-server/orders/destroy', {
-            params: {
-                id,
-            },
-        });
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
-export const requestAuthCreateCloudServerOrder = async (data) => {
-    try {
-        const res = await request.post('/manages/cloud-server/orders/create', data);
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
-export const requestAuthChangePasswordCloudServerOrder = async (data) => {
-    try {
-        const res = await request.post('/manages/cloud-server/orders/password', data);
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
-export const controlAuthGetCloudServerTryIt = async () => {
-    try {
-        const res = await request.get('/manages/cloud-server/try-it');
+        const res = await request.get('/manages/cloud-server/orders/async');
 
         return res.data;
     } catch (error) {
