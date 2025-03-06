@@ -1,10 +1,9 @@
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { SearchOutlined } from '@ant-design/icons';
 import { Fragment, useEffect, useState } from 'react';
 import { IconArrowLeft, IconInfoCircleFilled } from '@tabler/icons-react';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { Tag, Card, Flex, Spin, Space, Table, Input, Button, Pagination, Tooltip, Breadcrumb, notification } from 'antd';
+import { Tag, Card, Flex, Spin, Space, Table, Button, Pagination, Tooltip, Breadcrumb, notification } from 'antd';
 
 import router from '~/configs/routes';
 import DetailRequest from './DetailRequest';
@@ -106,18 +105,6 @@ function Requests() {
             },
         },
         {
-            title: 'IP',
-            dataIndex: 'ip',
-            key: 'ip',
-            render: (ip) => <Fragment>{ip ? ip : 'Trống'}</Fragment>,
-        },
-        {
-            title: 'Địa chỉ',
-            dataIndex: 'address',
-            key: 'address',
-            render: (address) => <Fragment>{address ? address : 'Trống'}</Fragment>,
-        },
-        {
             title: 'Ngày tạo/cập nhật',
             key: 'date',
             render: (data) => (
@@ -178,9 +165,6 @@ function Requests() {
                                 },
                             ]}
                         />
-                    </Flex>
-                    <Flex justify="end" className="responsive-item">
-                        <Input prefix={<SearchOutlined />} style={{ minWidth: 260 }} placeholder="Tìm kiếm" />
                     </Flex>
                 </Flex>
             </Card>

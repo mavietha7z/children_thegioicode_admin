@@ -1,26 +1,23 @@
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { PlusOutlined } from '@ant-design/icons';
 import { Fragment, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { IconTrash, IconArrowLeft, IconUsersGroup, IconClipboardText, IconGitPullRequest, IconInfoCircleFilled } from '@tabler/icons-react';
-import { Tag, Card, Flex, Spin, Space, Table, Image, Button, Tooltip, Pagination, Popconfirm, Breadcrumb, notification } from 'antd';
+import { Tag, Card, Flex, Spin, Space, Table, Image, Button, Tooltip, Pagination, Breadcrumb, notification } from 'antd';
+import { IconArrowLeft, IconUsersGroup, IconGitPullRequest, IconInfoCircleFilled, IconRotate } from '@tabler/icons-react';
 
-import CreateApi from './CreateApi';
-import DetailApi from './DetailApi';
+import UpdateApi from './UpdateApi';
 import router from '~/configs/routes';
 import { convertCurrency } from '~/configs';
-import IconQuestion from '~/assets/icon/IconQuestion';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
 import imageNotFound from '~/assets/image/image_not.jpg';
-import { requestAuthDestroyApi, requestAuthGetApis } from '~/services/api';
+import { requestAuthAsyncApi, requestAuthGetApis } from '~/services/api';
 
 function Apis() {
     const [api, setApi] = useState(null);
     const [apis, setApis] = useState([]);
     const [loading, setLoading] = useState(false);
     const [openUpdate, setOpenUpdate] = useState(false);
-    const [openCreate, setOpenCreate] = useState(false);
+    const [loadingAsync, setLoadingAsync] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [pages, setPages] = useState(1);
@@ -58,37 +55,35 @@ function Apis() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, id]);
 
-    const confirmDestroyApi = async (id) => {
-        if (!id) {
-            return notification.error({
-                message: 'Thông báo',
-                description: 'Không lấy được ID API cần xoá',
-            });
-        }
+    const handleAsyncApis = async () => {
+        setLoadingAsync(true);
+        const result = await requestAuthAsyncApi();
 
-        const result = await requestAuthDestroyApi(id);
-
+        setLoadingAsync(false);
         if (result.status === 401 || result.status === 403) {
             dispatch(logoutAuthSuccess());
             navigate(`${router.login}?redirect_url=${pathname}`);
         } else if (result?.status === 200) {
-            const cloneApis = [...apis];
+            const getRegions = await requestAuthGetApis(page, id);
 
-            const indexApi = cloneApis.findIndex((item) => item.key === id);
-            if (indexApi === -1) {
-                return notification.error({
+            setLoading(false);
+            if (getRegions.status === 401 || getRegions.status === 403) {
+                dispatch(logoutAuthSuccess());
+                navigate(`${router.login}?redirect_url=${pathname}`);
+            } else if (getRegions?.status === 200) {
+                setPages(getRegions.pages);
+                setApis(getRegions.data);
+
+                notification.success({
                     message: 'Thông báo',
-                    description: 'Không tìm thấy api trong danh sách',
+                    description: result.message,
+                });
+            } else {
+                notification.error({
+                    message: 'Thông báo',
+                    description: getRegions?.error || 'Lỗi hệ thống vui lòng thử lại sau',
                 });
             }
-
-            cloneApis.splice(indexApi, 1);
-            setApis(cloneApis);
-
-            notification.success({
-                message: 'Thông báo',
-                description: result.message,
-            });
         } else {
             notification.error({
                 message: 'Thông báo',
@@ -211,13 +206,6 @@ function Apis() {
                             <IconInfoCircleFilled size={18} />
                         </Button>
                     </Tooltip>
-                    <Tooltip title="Xem document">
-                        <Link to={`${router.apis_document}/${data.key}`}>
-                            <Button type="primary" size="small" className="box-center">
-                                <IconClipboardText size={18} />
-                            </Button>
-                        </Link>
-                    </Tooltip>
                     <Tooltip title="Xem requests">
                         <Link to={`${router.apis_requests}/${data.key}`}>
                             <Button type="primary" size="small" className="box-center">
@@ -231,21 +219,6 @@ function Apis() {
                                 <IconUsersGroup size={18} />
                             </Button>
                         </Link>
-                    </Tooltip>
-                    <Tooltip title="Xoá">
-                        <Popconfirm
-                            title="Delete?"
-                            description={`#${data.id}`}
-                            onConfirm={() => confirmDestroyApi(data.key)}
-                            okText="Xoá"
-                            cancelText="Huỷ"
-                            className="box-center"
-                            icon={<IconQuestion width={14} height={14} className="mt-1 mr-1" style={{ color: '#ff4d4f' }} />}
-                        >
-                            <Button danger type="primary" size="small">
-                                <IconTrash size={18} />
-                            </Button>
-                        </Popconfirm>
                     </Tooltip>
                 </Space>
             ),
@@ -272,16 +245,21 @@ function Apis() {
                         />
                     </Flex>
                     <Flex justify="end" className="responsive-item">
-                        <Button className="box-center w-xs-full" type="primary" onClick={() => setOpenCreate(true)}>
-                            <PlusOutlined />
-                            Thêm mới
+                        <Button
+                            className="box-center w-xs-full gap-1"
+                            type="primary"
+                            onClick={handleAsyncApis}
+                            disabled={loadingAsync}
+                            loading={loadingAsync}
+                        >
+                            <IconRotate size={16} />
+                            Đồng bộ
                         </Button>
                     </Flex>
                 </Flex>
             </Card>
 
-            {openCreate && <CreateApi open={openCreate} setOpen={setOpenCreate} callback={apis} setCallback={setApis} />}
-            {openUpdate && api && <DetailApi open={openUpdate} setOpen={setOpenUpdate} api={api} callback={apis} setCallback={setApis} />}
+            {openUpdate && api && <UpdateApi open={openUpdate} setOpen={setOpenUpdate} api={api} callback={apis} setCallback={setApis} />}
 
             <Card style={{ minHeight: 'calc(-171px + 100vh)' }}>
                 {!loading ? (

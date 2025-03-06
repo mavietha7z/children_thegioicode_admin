@@ -1,20 +1,18 @@
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { Fragment, useEffect, useState } from 'react';
-import { IconArrowLeft, IconInfoCircleFilled, IconRotate, IconTrash } from '@tabler/icons-react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { Card, Flex, Spin, Space, Image, Table, Button, Switch, Tooltip, Breadcrumb, Pagination, Popconfirm, notification } from 'antd';
+import { IconArrowLeft, IconInfoCircleFilled, IconRotate } from '@tabler/icons-react';
+import { Card, Flex, Spin, Space, Image, Table, Button, Switch, Tooltip, Breadcrumb, Pagination, notification } from 'antd';
 
 import router from '~/configs/routes';
 import UpdateImage from './UpdateImage';
-import IconQuestion from '~/assets/icon/IconQuestion';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
 import imageNotFound from '~/assets/image/image_not.jpg';
 import {
     controlAuthGetCloudServerImages,
     requestAuthAsyncCloudServerImage,
     requestAuthUpdateCloudServerImage,
-    controlAuthDestroyCloudServerImage,
 } from '~/services/cloudServer';
 
 function Images() {
@@ -134,45 +132,6 @@ function Images() {
         }
     };
 
-    const confirmDestroyServerImage = async (id) => {
-        if (!id) {
-            return notification.error({
-                message: 'Thông báo',
-                description: 'Không lấy được ID hệ điều hành',
-            });
-        }
-
-        const result = await controlAuthDestroyCloudServerImage(id);
-
-        if (result.status === 401 || result.status === 403) {
-            dispatch(logoutAuthSuccess());
-            navigate(`${router.login}?redirect_url=${pathname}`);
-        } else if (result?.status === 200) {
-            const cloneImages = [...images];
-
-            const imageIndex = cloneImages.findIndex((image) => image.key === id);
-            if (imageIndex === -1) {
-                return notification.error({
-                    message: 'Thông báo',
-                    description: 'Không tìm thấy hệ điều hành trong danh sách',
-                });
-            }
-
-            cloneImages.splice(imageIndex, 1);
-            setImages(cloneImages);
-
-            notification.success({
-                message: 'Thông báo',
-                description: result.message,
-            });
-        } else {
-            notification.error({
-                message: 'Thông báo',
-                description: result?.error || 'Lỗi hệ thống vui lòng thử lại sau',
-            });
-        }
-    };
-
     const columns = [
         {
             title: 'ID',
@@ -237,21 +196,6 @@ function Images() {
                         >
                             <IconInfoCircleFilled size={18} />
                         </Button>
-                    </Tooltip>
-                    <Tooltip title="Xoá">
-                        <Popconfirm
-                            title="Delete?"
-                            description={`#${data.id}`}
-                            onConfirm={() => confirmDestroyServerImage(data.key)}
-                            okText="Xoá"
-                            cancelText="Huỷ"
-                            className="box-center"
-                            icon={<IconQuestion width={14} height={14} className="mt-1 mr-1" style={{ color: '#ff4d4f' }} />}
-                        >
-                            <Button danger type="primary" size="small">
-                                <IconTrash size={18} />
-                            </Button>
-                        </Popconfirm>
                     </Tooltip>
                 </Space>
             ),

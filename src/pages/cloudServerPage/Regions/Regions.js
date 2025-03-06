@@ -2,34 +2,17 @@ import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { Fragment, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { IconArrowLeft, IconInfoCircleFilled, IconRotate, IconServer, IconTrash } from '@tabler/icons-react';
-import {
-    Card,
-    Flex,
-    Spin,
-    Space,
-    Table,
-    Image,
-    Badge,
-    Button,
-    Switch,
-    Tooltip,
-    Breadcrumb,
-    Pagination,
-    Popconfirm,
-    notification,
-} from 'antd';
+import { IconArrowLeft, IconInfoCircleFilled, IconRotate, IconServer } from '@tabler/icons-react';
+import { Card, Flex, Spin, Space, Table, Image, Badge, Button, Switch, Tooltip, Breadcrumb, Pagination, notification } from 'antd';
 
 import router from '~/configs/routes';
 import UpdateRegion from './UpdateRegion';
-import IconQuestion from '~/assets/icon/IconQuestion';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
 import imageNotFound from '~/assets/image/image_not.jpg';
 import {
     controlAuthGetCloudServerRegion,
     requestAuthAsyncCloudServerRegion,
     requestAuthUpdateCloudServerRegion,
-    controlAuthDestroyCloudServerRegion,
 } from '~/services/cloudServer';
 import RegionPlans from './RegionPlans';
 
@@ -155,45 +138,6 @@ function Regions() {
         }
     };
 
-    const confirmDestroyServerRegion = async (id) => {
-        if (!id) {
-            return notification.error({
-                message: 'Thông báo',
-                description: 'Không lấy được ID khu vực',
-            });
-        }
-
-        const result = await controlAuthDestroyCloudServerRegion(id);
-
-        if (result.status === 401 || result.status === 403) {
-            dispatch(logoutAuthSuccess());
-            navigate(`${router.login}?redirect_url=${pathname}`);
-        } else if (result?.status === 200) {
-            const cloneRegions = [...regions];
-
-            const regionIndex = cloneRegions.findIndex((region) => region.key === id);
-            if (regionIndex === -1) {
-                return notification.error({
-                    message: 'Thông báo',
-                    description: 'Không tìm thấy khu vực trong danh sách',
-                });
-            }
-
-            cloneRegions.splice(regionIndex, 1);
-            setRegions(cloneRegions);
-
-            notification.success({
-                message: 'Thông báo',
-                description: result.message,
-            });
-        } else {
-            notification.error({
-                message: 'Thông báo',
-                description: result?.error || 'Lỗi hệ thống vui lòng thử lại sau',
-            });
-        }
-    };
-
     const columns = [
         {
             title: 'ID',
@@ -269,21 +213,6 @@ function Regions() {
                                 <IconServer size={18} />
                             </Button>
                         </Badge>
-                    </Tooltip>
-                    <Tooltip title="Xoá">
-                        <Popconfirm
-                            title="Delete?"
-                            description={`#${data.id}`}
-                            onConfirm={() => confirmDestroyServerRegion(data.key)}
-                            okText="Xoá"
-                            cancelText="Huỷ"
-                            className="box-center"
-                            icon={<IconQuestion width={14} height={14} className="mt-1 mr-1" style={{ color: '#ff4d4f' }} />}
-                        >
-                            <Button danger type="primary" size="small">
-                                <IconTrash size={18} />
-                            </Button>
-                        </Popconfirm>
                     </Tooltip>
                 </Space>
             ),

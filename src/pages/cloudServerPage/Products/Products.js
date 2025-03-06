@@ -2,12 +2,11 @@ import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { Fragment, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { IconArrowLeft, IconCoin, IconInfoCircleFilled, IconPlus, IconRotate, IconTrash } from '@tabler/icons-react';
-import { Card, Flex, Spin, Space, Table, Badge, Button, Switch, Tooltip, Breadcrumb, Popconfirm, Pagination, notification } from 'antd';
+import { IconArrowLeft, IconCoin, IconInfoCircleFilled, IconPlus, IconRotate } from '@tabler/icons-react';
+import { Card, Flex, Spin, Space, Table, Badge, Button, Switch, Tooltip, Breadcrumb, Pagination, notification } from 'antd';
 
 import router from '~/configs/routes';
 import UpdateProduct from './UpdateProduct';
-import IconQuestion from '~/assets/icon/IconQuestion';
 import DrawerPricing from '~/components/DrawerPricing';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
 import { requestAuthCreatePricing } from '~/services/module';
@@ -15,7 +14,6 @@ import {
     controlAuthGetCloudServerProduct,
     requestAuthAsyncCloudServerProduct,
     requestAuthUpdateCloudServerProduct,
-    controlAuthDestroyCloudServerProduct,
 } from '~/services/cloudServer';
 
 function ServerProducts() {
@@ -211,45 +209,6 @@ function ServerProducts() {
         }
     };
 
-    const confirmDestroyServerProduct = async (id) => {
-        if (!id) {
-            return notification.error({
-                message: 'Thông báo',
-                description: 'Không lấy được ID cấu hình cần cập nhật',
-            });
-        }
-
-        const result = await controlAuthDestroyCloudServerProduct(id);
-
-        if (result.status === 401 || result.status === 403) {
-            dispatch(logoutAuthSuccess());
-            navigate(`${router.login}?redirect_url=${pathname}`);
-        } else if (result?.status === 200) {
-            const cloneProducts = [...products];
-
-            const productIndex = cloneProducts.findIndex((product) => product.key === id);
-            if (productIndex === -1) {
-                return notification.error({
-                    message: 'Thông báo',
-                    description: 'Không tìm thấy cấu hình trong danh sách',
-                });
-            }
-
-            cloneProducts.splice(productIndex, 1);
-            setProducts(cloneProducts);
-
-            notification.success({
-                message: 'Thông báo',
-                description: result.message,
-            });
-        } else {
-            notification.error({
-                message: 'Thông báo',
-                description: result?.error || 'Lỗi hệ thống vui lòng thử lại sau',
-            });
-        }
-    };
-
     const columns = [
         {
             title: 'ID',
@@ -367,21 +326,6 @@ function ServerProducts() {
                         >
                             <IconPlus size={18} />
                         </Button>
-                    </Tooltip>
-                    <Tooltip title="Xoá">
-                        <Popconfirm
-                            title="Delete?"
-                            description={`#${data.id}`}
-                            onConfirm={() => confirmDestroyServerProduct(data.key)}
-                            okText="Xoá"
-                            cancelText="Huỷ"
-                            className="box-center"
-                            icon={<IconQuestion width={14} height={14} className="mt-1 mr-1" style={{ color: '#ff4d4f' }} />}
-                        >
-                            <Button danger type="primary" size="small">
-                                <IconTrash size={18} />
-                            </Button>
-                        </Popconfirm>
                     </Tooltip>
                 </Space>
             ),

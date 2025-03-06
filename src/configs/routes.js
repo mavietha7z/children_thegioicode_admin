@@ -34,7 +34,6 @@ const router = {
     memberships: '/memberships',
     apis_players: apis + '/players',
     cloud_server: cloud + '/server',
-    apis_document: apis + '/document',
     apis_requests: apis + '/requests',
     settings_info: settings + '/info',
     localbank_users: localbank + users,

@@ -10,7 +10,7 @@ import imageNotFound from '~/assets/image/image_not.jpg';
 
 const { TextArea } = Input;
 
-function DetailApi({ open, setOpen, api, callback, setCallback }) {
+function UpdateApi({ open, setOpen, api, callback, setCallback }) {
     const [imageUrl, setImageUrl] = useState('');
 
     const [form] = Form.useForm();
@@ -25,6 +25,8 @@ function DetailApi({ open, setOpen, api, callback, setCallback }) {
     }, [api.image_url]);
 
     const handleUpdateApi = async (values) => {
+        const { title, slug_url, price, old_price, priority, version, free_usage, status, description } = values;
+
         if (!api.key) {
             return notification.error({
                 message: 'Thông báo',
@@ -33,8 +35,15 @@ function DetailApi({ open, setOpen, api, callback, setCallback }) {
         }
 
         const data = {
-            image_url: imageUrl,
-            ...values,
+            title,
+            price,
+            status,
+            version,
+            slug_url,
+            priority,
+            old_price,
+            free_usage,
+            description,
         };
         const result = await requestAuthUpdateApi(api.key, data);
 
@@ -88,16 +97,15 @@ function DetailApi({ open, setOpen, api, callback, setCallback }) {
                 initialValues={{
                     title: api.title,
                     price: api.price,
-                    proxy: api.proxy,
+                    key: api.apikey.key,
                     status: api.status,
                     version: api.version,
                     slug_url: api.slug_url,
                     priority: api.priority,
-                    datadome: api.datadome,
                     old_price: api.old_price,
                     free_usage: api.free_usage,
                     description: api.description,
-                    count_get_datadome: api.count_get_datadome,
+                    used: api.apikey.used,
                 }}
             >
                 <Row gutter={16}>
@@ -231,18 +239,13 @@ function DetailApi({ open, setOpen, api, callback, setCallback }) {
                         </Form.Item>
                     </Col>
                     <Col md={18} xs={24}>
-                        <Form.Item name="proxy" label="Proxy">
-                            <Input placeholder="Proxy" />
+                        <Form.Item name="key" label="Apikey">
+                            <Input placeholder="key" readOnly />
                         </Form.Item>
                     </Col>
                     <Col md={6} xs={24}>
-                        <Form.Item name="count_get_datadome" label="Số lần lấy datadome">
-                            <InputNumber className="w-full" />
-                        </Form.Item>
-                    </Col>
-                    <Col span={24}>
-                        <Form.Item name="datadome" label="Datadome">
-                            <TextArea autoSize={{ minRows: 3, maxRows: 5 }} placeholder="Nhập datadome" />
+                        <Form.Item name="used" label="Lượt dùng">
+                            <Input placeholder="Lượt dùng" readOnly />
                         </Form.Item>
                     </Col>
                     <Col span={24}>
@@ -280,4 +283,4 @@ function DetailApi({ open, setOpen, api, callback, setCallback }) {
         </Drawer>
     );
 }
-export default DetailApi;
+export default UpdateApi;

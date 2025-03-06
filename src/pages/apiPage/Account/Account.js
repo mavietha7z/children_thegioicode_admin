@@ -1,6 +1,5 @@
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { SearchOutlined } from '@ant-design/icons';
 import { Fragment, useEffect, useState } from 'react';
 import { IconArrowLeft, IconCopy, IconDatabaseExport } from '@tabler/icons-react';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
@@ -13,7 +12,6 @@ import {
     Table,
     Image,
     Empty,
-    Input,
     Modal,
     Button,
     Tooltip,
@@ -346,7 +344,6 @@ function Account() {
                                 <span className="ml-1">Xuất tài khoản</span>
                             </Button>
                         )}
-                        <Input prefix={<SearchOutlined />} style={{ width: 260 }} placeholder="Tìm kiếm" />
                     </Flex>
                 </Flex>
             </Card>

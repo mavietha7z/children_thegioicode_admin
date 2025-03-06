@@ -58,9 +58,9 @@ export const requestAuthGetApis = async (page, id) => {
     }
 };
 
-export const requestAuthCreateApi = async (data) => {
+export const requestAuthAsyncApi = async () => {
     try {
-        const res = await request.post('/manages/apis/create', data);
+        const res = await request.get('/manages/apis/async');
 
         return res.data;
     } catch (error) {
@@ -73,48 +73,6 @@ export const requestAuthUpdateApi = async (id, data) => {
         const res = await request.put('/manages/apis/update', data, {
             params: {
                 id,
-            },
-        });
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
-export const requestAuthDestroyApi = async (id) => {
-    try {
-        const res = await request.delete('/manages/apis/destroy', {
-            params: {
-                id,
-            },
-        });
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
-export const requestAuthGetDocumentApi = async (service_id) => {
-    try {
-        const res = await request.get('/manages/apis/document', {
-            params: {
-                service_id,
-            },
-        });
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
-export const requestAuthUpdateDocumentApi = async (service_id, data) => {
-    try {
-        const res = await request.put('/manages/apis/document', data, {
-            params: {
-                service_id,
             },
         });
 

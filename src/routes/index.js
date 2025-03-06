@@ -7,7 +7,6 @@ import Login from '~/layouts/components/Login';
 import Apis from '~/pages/apiPage/Apis';
 import ApiKeys from '~/pages/apiPage/Apikey';
 import Account from '~/pages/apiPage/Account';
-import Document from '~/pages/apiPage/Document';
 import Requests from '~/pages/apiPage/Requests';
 
 import Cart from '~/pages/orderPage/Cart';
@@ -82,7 +81,6 @@ export const privateRoutes = [
     { path: router.settings_email, component: SettingSendMail },
     { path: router.wallets_bonus_points, component: BonusPoint },
     { path: router.apis_requests + '/:id', component: Requests },
-    { path: router.apis_document + '/:id', component: Document },
     { path: router.wallets_histories, component: WalletHistory },
     { path: router.cloud_server_image, component: ServerImages },
     { path: router.notification_web, component: NotificationWeb },

@@ -38,20 +38,6 @@ export const requestAuthUpdateCloudServerRegion = async (id, type, data) => {
     }
 };
 
-export const controlAuthDestroyCloudServerRegion = async (id) => {
-    try {
-        const res = await request.delete('/manages/cloud-server/regions/destroy', {
-            params: {
-                id,
-            },
-        });
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
 // Image
 export const controlAuthGetCloudServerImages = async (page) => {
     try {
@@ -81,20 +67,6 @@ export const requestAuthUpdateCloudServerImage = async (id, type, data) => {
     try {
         const res = await request.put('/manages/cloud-server/images/update', data, {
             params: { type, id },
-        });
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
-export const controlAuthDestroyCloudServerImage = async (id) => {
-    try {
-        const res = await request.delete('/manages/cloud-server/images/destroy', {
-            params: {
-                id,
-            },
         });
 
         return res.data;
@@ -134,20 +106,6 @@ export const requestAuthUpdateCloudServerProduct = async (id, type, data) => {
         const res = await request.put('/manages/cloud-server/products/update', data, {
             params: {
                 type,
-                id,
-            },
-        });
-
-        return res.data;
-    } catch (error) {
-        return error.response?.data;
-    }
-};
-
-export const controlAuthDestroyCloudServerProduct = async (id) => {
-    try {
-        const res = await request.delete('/manages/cloud-server/products/destroy', {
-            params: {
                 id,
             },
         });
