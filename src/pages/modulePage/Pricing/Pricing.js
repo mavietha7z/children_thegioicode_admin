@@ -171,11 +171,15 @@ function Pricing() {
             key: 'service_type',
             render: (service_type) => {
                 if (service_type === 'Template') {
-                    return 'Template';
+                    return 'Tạo website';
                 }
 
                 if (service_type === 'Source') {
                     return 'Mã nguồn';
+                }
+
+                if (service_type === 'CloudServerProduct') {
+                    return 'Cloud Server';
                 }
 
                 return service_type;
