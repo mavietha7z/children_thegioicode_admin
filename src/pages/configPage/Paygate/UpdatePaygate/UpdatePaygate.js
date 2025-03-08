@@ -14,7 +14,7 @@ import { requestAuthUpdatePaygate } from '~/services/app';
 
 const { TextArea } = Input;
 
-function DetailPaygate({ open, setOpen, paygate, callback, setCallback }) {
+function UpdatePaygate({ open, setOpen, paygate, callback, setCallback }) {
     const [imageUrl, setImageUrl] = useState([]);
     const [previewImageUrl, setPreviewImageUrl] = useState('');
     const [previewOpenImageUrl, setPreviewOpenImageUrl] = useState(false);
@@ -292,4 +292,4 @@ function DetailPaygate({ open, setOpen, paygate, callback, setCallback }) {
     );
 }
 
-export default DetailPaygate;
+export default UpdatePaygate;

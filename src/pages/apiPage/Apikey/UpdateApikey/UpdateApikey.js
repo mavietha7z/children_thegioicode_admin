@@ -7,7 +7,7 @@ import router from '~/configs/routes';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
 import { requestAuthUpdateApikey } from '~/services/api';
 
-function DetailApikey({ open, setOpen, apikey, callback, setCallback }) {
+function UpdateApikey({ open, setOpen, apikey, callback, setCallback }) {
     const [loading, setLoading] = useState(false);
 
     const [form] = Form.useForm();
@@ -166,4 +166,4 @@ function DetailApikey({ open, setOpen, apikey, callback, setCallback }) {
     );
 }
 
-export default DetailApikey;
+export default UpdateApikey;

@@ -6,7 +6,7 @@ import router from '~/configs/routes';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
 import { requestAuthUpdateUserbank } from '~/services/bank';
 
-function UserbankDetail({ open, setOpen, userbank, callback, setCallback }) {
+function UpdateUserbank({ open, setOpen, userbank, callback, setCallback }) {
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -149,4 +149,4 @@ function UserbankDetail({ open, setOpen, userbank, callback, setCallback }) {
     );
 }
 
-export default UserbankDetail;
+export default UpdateUserbank;

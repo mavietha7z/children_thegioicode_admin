@@ -8,7 +8,7 @@ import { requestAuthUpdateMembership } from '~/services/account';
 
 const { TextArea } = Input;
 
-function MembershipDetail({ open, setOpen, membership, callback, setCallback }) {
+function UpdateMembership({ open, setOpen, membership, callback, setCallback }) {
     const [form] = Form.useForm();
 
     const dispatch = useDispatch();
@@ -52,6 +52,7 @@ function MembershipDetail({ open, setOpen, membership, callback, setCallback }) 
             }
 
             cloneMemberships[indexMembership].discount = values.discount;
+            cloneMemberships[indexMembership].description = values.description;
             cloneMemberships[indexMembership].achieve_point = values.achieve_point;
             cloneMemberships.sort((a, b) => a.achieve_point - b.achieve_point);
             setCallback(cloneMemberships);
@@ -122,4 +123,4 @@ function MembershipDetail({ open, setOpen, membership, callback, setCallback }) 
     );
 }
 
-export default MembershipDetail;
+export default UpdateMembership;

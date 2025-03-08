@@ -6,8 +6,8 @@ import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-do
 import { Card, Flex, Spin, Space, Table, Button, Tooltip, notification, Breadcrumb, Switch, Pagination } from 'antd';
 
 import router from '~/configs/routes';
-import Detail from './MembershipDetail';
 import { convertCurrency } from '~/configs';
+import UpdateMembership from './UpdateMembership';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
 import { requestAuthGetMemberships, requestAuthUpdateMembership } from '~/services/account';
 
@@ -15,7 +15,7 @@ function Membership() {
     const [loading, setLoading] = useState(false);
     const [membership, setMembership] = useState(null);
     const [memberships, setMemberships] = useState([]);
-    const [openDetail, setOpenDetail] = useState(false);
+    const [openUpdate, setOpenUpdate] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [pages, setPages] = useState(1);
@@ -153,7 +153,7 @@ function Membership() {
                         size="small"
                         onClick={() => {
                             setMembership(data);
-                            setOpenDetail(true);
+                            setOpenUpdate(true);
                         }}
                     >
                         <IconInfoCircleFilled size={18} />
@@ -191,10 +191,10 @@ function Membership() {
                 </Flex>
             </Card>
 
-            {openDetail && (
-                <Detail
-                    open={openDetail}
-                    setOpen={setOpenDetail}
+            {openUpdate && (
+                <UpdateMembership
+                    open={openUpdate}
+                    setOpen={setOpenUpdate}
                     membership={membership}
                     callback={memberships}
                     setCallback={setMemberships}

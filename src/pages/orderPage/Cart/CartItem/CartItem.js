@@ -4,7 +4,7 @@ import { Drawer, Empty, Flex, Spin, Table } from 'antd';
 
 import { convertCurrency } from '~/configs';
 
-function CartDetail({ open, setOpen, cart }) {
+function CartItem({ open, setOpen, cart }) {
     const [empty, setEmpty] = useState(true);
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -92,4 +92,4 @@ function CartDetail({ open, setOpen, cart }) {
     );
 }
 
-export default CartDetail;
+export default CartItem;

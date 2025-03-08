@@ -5,7 +5,7 @@ import { IconArrowLeft, IconShoppingBag } from '@tabler/icons-react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { Card, Flex, Spin, Badge, Space, Table, Button, Switch, Tooltip, Pagination, Breadcrumb, notification } from 'antd';
 
-import CartDetail from './CartDetail';
+import CartItem from './CartItem';
 import router from '~/configs/routes';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
 import { requestAuthGetCart, requestAuthUpdateCart } from '~/services/order';
@@ -184,7 +184,7 @@ function Cart() {
                 </Flex>
             </Card>
 
-            {openListCart && <CartDetail open={openListCart} setOpen={setOpenListCart} cart={cart} />}
+            {openListCart && <CartItem open={openListCart} setOpen={setOpenListCart} cart={cart} />}
 
             <Card style={{ minHeight: 'calc(-171px + 100vh)' }}>
                 {!loading ? (

@@ -7,7 +7,7 @@ import router from '~/configs/routes';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
 import { requestAuthUpdateCycles } from '~/services/module';
 
-function DetailCycles({ open, setOpen, cycle, callback, setCallback }) {
+function UpdateCycles({ open, setOpen, cycle, callback, setCallback }) {
     const [loading, setLoading] = useState(false);
     const [selectOption, setSelectOption] = useState(cycle.unit);
 
@@ -146,4 +146,4 @@ function DetailCycles({ open, setOpen, cycle, callback, setCallback }) {
     );
 }
 
-export default DetailCycles;
+export default UpdateCycles;

@@ -7,7 +7,7 @@ import { IconArrowLeft, IconBuildingBank, IconInfoCircleFilled, IconTrash } from
 import { Card, Flex, Spin, Badge, Image, Space, Table, Button, Switch, Tooltip, Breadcrumb, Popconfirm, notification } from 'antd';
 
 import router from '~/configs/routes';
-import DetailPaygate from './DetailPaygate';
+import UpdatePaygate from './UpdatePaygate';
 import CreatePaygate from './CreatePaygate';
 import { convertCurrency } from '~/configs';
 import IconQuestion from '~/assets/icon/IconQuestion';
@@ -19,7 +19,7 @@ function Paygate() {
     const [paygate, setPaygate] = useState(null);
     const [loading, setLoading] = useState(false);
     const [openCreate, setOpenCreate] = useState(false);
-    const [openDetail, setOpenDetail] = useState(false);
+    const [openUpdate, setOpenUpdate] = useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -232,7 +232,7 @@ function Paygate() {
                             size="small"
                             onClick={() => {
                                 setPaygate(data);
-                                setOpenDetail(true);
+                                setOpenUpdate(true);
                             }}
                         >
                             <IconInfoCircleFilled size={18} />
@@ -302,8 +302,8 @@ function Paygate() {
             </Card>
 
             {openCreate && <CreatePaygate open={openCreate} setOpen={setOpenCreate} callback={paygates} setCallback={setPaygates} />}
-            {openDetail && paygate && (
-                <DetailPaygate open={openDetail} setOpen={setOpenDetail} paygate={paygate} callback={paygates} setCallback={setPaygates} />
+            {openUpdate && paygate && (
+                <UpdatePaygate open={openUpdate} setOpen={setOpenUpdate} paygate={paygate} callback={paygates} setCallback={setPaygates} />
             )}
 
             <Card style={{ minHeight: 'calc(-144px + 100vh)' }}>

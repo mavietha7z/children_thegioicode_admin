@@ -8,7 +8,7 @@ import { Card, Flex, Spin, Space, Table, Button, Switch, Tooltip, Popconfirm, Pa
 
 import router from '~/configs/routes';
 import CreateCycles from './CreateCycles';
-import DetailCycles from './DetailCycles';
+import UpdateCycles from './UpdateCycles';
 import IconQuestion from '~/assets/icon/IconQuestion';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
 import { requestAuthDestroyCycles, requestAuthGetCycles, requestAuthUpdateCycles } from '~/services/module';
@@ -18,7 +18,7 @@ function Cycles() {
     const [cycle, setCycle] = useState(null);
     const [loading, setLoading] = useState(false);
     const [openCreate, setOpenCreate] = useState(false);
-    const [openDetail, setOpenDetail] = useState(false);
+    const [openUpdate, setOpenUpdate] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [pages, setPages] = useState(1);
@@ -197,7 +197,7 @@ function Cycles() {
                             size="small"
                             onClick={() => {
                                 setCycle(data);
-                                setOpenDetail(true);
+                                setOpenUpdate(true);
                             }}
                         >
                             <IconInfoCircleFilled size={18} />
@@ -258,8 +258,8 @@ function Cycles() {
             </Card>
 
             {openCreate && <CreateCycles open={openCreate} setOpen={setOpenCreate} callback={cycles} setCallback={setCycles} />}
-            {openDetail && cycle && (
-                <DetailCycles open={openDetail} setOpen={setOpenDetail} cycle={cycle} callback={cycles} setCallback={setCycles} />
+            {openUpdate && cycle && (
+                <UpdateCycles open={openUpdate} setOpen={setOpenUpdate} cycle={cycle} callback={cycles} setCallback={setCycles} />
             )}
 
             <Card style={{ minHeight: 'calc(-171px + 100vh)' }}>

@@ -7,7 +7,7 @@ import { IconArrowLeft, IconInfoCircleFilled, IconCopy, IconWebhook } from '@tab
 import { Card, Flex, Spin, Space, Table, Input, Button, Switch, Tooltip, Pagination, Breadcrumb, notification } from 'antd';
 
 import router from '~/configs/routes';
-import DetailApikey from './DetailApikey';
+import UpdateApikey from './UpdateApikey';
 import useDebounce from '~/hooks/useDebounce';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
 import { generateCateString, serviceCopyKeyBoard } from '~/configs';
@@ -18,7 +18,7 @@ function Apikey() {
     const [apikey, setApikey] = useState(null);
     const [loading, setLoading] = useState(false);
     const [searchValue, setSearchValue] = useState('');
-    const [openDetail, setOpenDetail] = useState(false);
+    const [openUpdate, setOpenUpdate] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [pages, setPages] = useState(1);
@@ -217,7 +217,7 @@ function Apikey() {
                             size="small"
                             onClick={() => {
                                 setApikey(data);
-                                setOpenDetail(true);
+                                setOpenUpdate(true);
                             }}
                         >
                             <IconInfoCircleFilled size={18} />
@@ -270,8 +270,8 @@ function Apikey() {
                 </Flex>
             </Card>
 
-            {openDetail && apikey && (
-                <DetailApikey open={openDetail} setOpen={setOpenDetail} apikey={apikey} callback={apiKeys} setCallback={setApiKeys} />
+            {openUpdate && apikey && (
+                <UpdateApikey open={openUpdate} setOpen={setOpenUpdate} apikey={apikey} callback={apiKeys} setCallback={setApiKeys} />
             )}
 
             <Card style={{ minHeight: 'calc(-171px + 100vh)' }}>

@@ -8,7 +8,7 @@ import { Card, Flex, Spin, Space, Image, Table, Button, Switch, Tooltip, Popconf
 
 import router from '~/configs/routes';
 import CreateLocalbank from './CreateLocalbank';
-import LocalbankDetail from './LocalbankDetail';
+import UpdateLocalbank from './UpdateLocalbank';
 import IconQuestion from '~/assets/icon/IconQuestion';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
 import imageNotFound from '~/assets/image/image_not.jpg';
@@ -286,7 +286,7 @@ function Localbank() {
 
             {openCreate && <CreateLocalbank open={openCreate} setOpen={setOpenCreate} callback={localbanks} setCallback={setLocalbanks} />}
             {openUpdate && localbank && (
-                <LocalbankDetail
+                <UpdateLocalbank
                     open={openUpdate}
                     setOpen={setOpenUpdate}
                     localbank={localbank}

@@ -7,7 +7,7 @@ import { IconArrowLeft, IconInfoCircleFilled, IconTrash } from '@tabler/icons-re
 import { Card, Flex, Spin, Space, Table, Button, Switch, Tooltip, Breadcrumb, Pagination, Popconfirm, notification } from 'antd';
 
 import router from '~/configs/routes';
-import UserBankDetail from './UserbankDetail';
+import UpdateUserbank from './UpdateUserbank';
 import CreateUserBank from './CreateUserbank';
 import IconQuestion from '~/assets/icon/IconQuestion';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
@@ -276,7 +276,7 @@ function Userbank() {
 
             {openCreate && <CreateUserBank open={openCreate} setOpen={setOpenCreate} callback={userbanks} setCallback={setUserbanks} />}
             {openUpdate && userbank && (
-                <UserBankDetail
+                <UpdateUserbank
                     open={openUpdate}
                     setOpen={setOpenUpdate}
                     userbank={userbank}
