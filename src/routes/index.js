@@ -33,6 +33,7 @@ import SettingSendMail from '~/pages/configPage/Setting/SettingSendMail';
 import Sources from '~/pages/sourcePage/Sources';
 
 import Invoices from '~/pages/payPage/Invoices';
+import Charging from '~/pages/payPage/Charging';
 
 import Wallets from '~/pages/walletPage/Wallets';
 import BonusPoint from '~/pages/walletPage/BonusPoint';
@@ -66,6 +67,7 @@ export const privateRoutes = [
     { path: router.paygates, component: Paygate },
     { path: router.partners, component: Partners },
     { path: router.invoices, component: Invoices },
+    { path: router.chargings, component: Charging },
     { path: router.templates, component: Template },
     { path: router.localbank, component: Localbank },
     { path: router.memberships, component: Membership },

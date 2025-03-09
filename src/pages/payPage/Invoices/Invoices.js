@@ -10,7 +10,7 @@ import { convertCurrency } from '~/configs';
 import InvoiceDetail from './InvoiceDetail';
 import IconQuestion from '~/assets/icon/IconQuestion';
 import { logoutAuthSuccess } from '~/redux/reducer/auth';
-import { requestAuthDestroyInvoice, requestAuthGetInvoices } from '~/services/invoice';
+import { requestAuthDestroyInvoice, requestAuthGetInvoices } from '~/services/pay';
 
 function Invoices() {
     const [invoices, setInvoices] = useState([]);

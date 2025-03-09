@@ -27,6 +27,7 @@ const router = {
     paygates: '/paygates',
     invoices: '/invoices',
     partners: '/partners',
+    chargings: '/chargings',
     memberships: '/memberships',
     apis_players: apis + '/players',
     cloud_server: cloud + '/server',

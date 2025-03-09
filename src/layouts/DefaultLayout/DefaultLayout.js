@@ -62,7 +62,10 @@ const items = [
         getItem(<Link to={router.localbank}>Danh sách ngân hàng</Link>, router.localbank),
         getItem(<Link to={router.localbank_users}>Ngân hàng thành viên</Link>, router.localbank_users),
     ]),
-    getItem('Thanh toán', 'sub-6', <IconCreditCardPay />, [getItem(<Link to={router.invoices}>Hoá đơn</Link>, router.invoices)]),
+    getItem('Thanh toán', 'sub-6', <IconCreditCardPay />, [
+        getItem(<Link to={router.invoices}>Hoá đơn</Link>, router.invoices),
+        getItem(<Link to={router.chargings}>Nạp thẻ</Link>, router.chargings),
+    ]),
     getItem('Đơn hàng', 'sub-7', <IconShoppingBag />, [
         getItem(<Link to={router.cart}>Giỏ hàng</Link>, router.cart),
         getItem(<Link to={router.orders}>Danh sách</Link>, router.orders),
