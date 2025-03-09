@@ -46,7 +46,7 @@ function UpdateUserbank({ open, setOpen, userbank, callback, setCallback }) {
 
     return (
         <Drawer
-            title="Tạo mới ngân hàng khách hàng"
+            title="Chi tiết ngân hàng khách hàng"
             width={820}
             onClose={() => setOpen(false)}
             open={open}

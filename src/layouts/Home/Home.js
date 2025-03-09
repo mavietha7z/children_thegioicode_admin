@@ -476,7 +476,7 @@ function Home() {
                 >
                     <ul className="transfer-list">
                         {loginHistories.map((history) => (
-                            <li>
+                            <li key={history.id}>
                                 <div>
                                     <b>{history.user_id.email}</b>
                                     <div className="font-size-13">{moment(history.created_at).format('YYYY-MM-DD HH:mm:ss')}</div>
