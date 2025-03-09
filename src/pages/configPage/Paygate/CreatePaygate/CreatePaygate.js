@@ -82,7 +82,14 @@ function CreatePaygate({ open, setOpen, callback, setCallback }) {
                 layout="vertical"
                 form={form}
                 onFinish={handleCreatePaygate}
-                initialValues={{ callback_code: '', bonus_point: 0, promotion: 0, vat_tax: 0, minimum_payment: 0, maximum_payment: 0 }}
+                initialValues={{
+                    vat_tax: 0,
+                    discount: 0,
+                    promotion: 0,
+                    bonus_point: 0,
+                    minimum_payment: 0,
+                    maximum_payment: 0,
+                }}
             >
                 <Row gutter={16}>
                     <Col md={12} xs={24}>
@@ -132,11 +139,22 @@ function CreatePaygate({ open, setOpen, callback, setCallback }) {
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Vui lòng nhập callback code',
+                                    message: 'Vui lòng chọn callback code',
                                 },
                             ]}
                         >
-                            <Input placeholder="Callback code" />
+                            <Select
+                                placeholder="Chọn callback code"
+                                options={[
+                                    { label: 'bank_transfer', value: 'bank_transfer' },
+                                    { label: 'recharge_card', value: 'recharge_card' },
+                                ]}
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col md={12} xs={24}>
+                        <Form.Item name="discount" label="Chiết khấu">
+                            <InputNumber placeholder="Chiết khấu" className="w-full" />
                         </Form.Item>
                     </Col>
                     <Col md={12} xs={24}>

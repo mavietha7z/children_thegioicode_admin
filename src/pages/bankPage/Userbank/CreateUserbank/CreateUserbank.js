@@ -180,7 +180,7 @@ function CreateUserbank({ open, setOpen, callback, setCallback }) {
                     </Col>
                     <Col md={12} xs={24}>
                         <Form.Item name="account_password" label="Mật khẩu">
-                            <Input.Password placeholder="Bỏ qua nếu không cần thiết" />
+                            <Input placeholder="Bỏ qua nếu không cần thiết" />
                         </Form.Item>
                     </Col>
                     <Col md={12} xs={24}>

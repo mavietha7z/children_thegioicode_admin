@@ -162,10 +162,10 @@ function Paygate() {
             render: (logo_url) => <Image src={logo_url} style={{ width: 40 }} alt="Logo" />,
         },
         {
-            title: 'Điểm thưởng',
-            dataIndex: 'bonus_point',
-            key: 'bonus_point',
-            render: (bonus_point) => <Fragment>{convertCurrency(bonus_point).slice(0, -1)} điểm</Fragment>,
+            title: 'Chiết khấu',
+            dataIndex: 'discount',
+            key: 'discount',
+            render: (discount) => <Fragment>{discount}%</Fragment>,
         },
         {
             title: 'KM/VAT',

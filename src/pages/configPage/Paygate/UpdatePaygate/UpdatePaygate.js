@@ -121,6 +121,7 @@ function UpdatePaygate({ open, setOpen, paygate, callback, setCallback }) {
                     name: paygate.name,
                     service: paygate.service,
                     vat_tax: paygate.vat_tax,
+                    discount: paygate.discount,
                     question: paygate.question,
                     promotion: paygate.promotion,
                     description: paygate.description,
@@ -178,11 +179,22 @@ function UpdatePaygate({ open, setOpen, paygate, callback, setCallback }) {
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Vui lòng nhập callback code',
+                                    message: 'Vui lòng chọn callback code',
                                 },
                             ]}
                         >
-                            <Input placeholder="Callback code" />
+                            <Select
+                                placeholder="Chọn callback code"
+                                options={[
+                                    { label: 'bank_transfer', value: 'bank_transfer' },
+                                    { label: 'recharge_card', value: 'recharge_card' },
+                                ]}
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col md={12} xs={24}>
+                        <Form.Item name="discount" label="Chiết khấu">
+                            <InputNumber placeholder="Chiết khấu" className="w-full" />
                         </Form.Item>
                     </Col>
                     <Col md={12} xs={24}>

@@ -126,7 +126,7 @@ function UpdateUserbank({ open, setOpen, userbank, callback, setCallback }) {
                     </Col>
                     <Col md={12} xs={24}>
                         <Form.Item name="account_password" label="Mật khẩu">
-                            <Input.Password placeholder="Bỏ qua nếu không thay đổi" />
+                            <Input placeholder="Bỏ qua nếu không thay đổi" />
                         </Form.Item>
                     </Col>
                     <Col md={12} xs={24}>
@@ -140,7 +140,7 @@ function UpdateUserbank({ open, setOpen, userbank, callback, setCallback }) {
                     <Space>
                         <Button onClick={() => setOpen(false)}>Huỷ</Button>
                         <Button type="primary" htmlType="submit">
-                            Tạo mới
+                            Cập nhật
                         </Button>
                     </Space>
                 </Flex>
