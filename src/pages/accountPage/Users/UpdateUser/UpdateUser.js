@@ -129,7 +129,16 @@ function UpdateUser({ open, setOpen, user, callback, setCallback }) {
                         </Form.Item>
                     </Col>
                     <Col md={12} xs={24}>
-                        <Form.Item name="password" label="Mật khẩu">
+                        <Form.Item
+                            name="password"
+                            label="Mật khẩu"
+                            rules={[
+                                {
+                                    pattern: /^\S{6,30}$/,
+                                    message: 'Mật khẩu không hợp lệ',
+                                },
+                            ]}
+                        >
                             <Input placeholder="Bỏ qua nếu không thay đổi" />
                         </Form.Item>
                     </Col>

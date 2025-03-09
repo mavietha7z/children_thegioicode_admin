@@ -35,6 +35,7 @@ function SettingInfo() {
                 setBackendLogoUrl(backend_logo_url);
 
                 form.setFieldValue('email', contacts.email);
+                form.setFieldValue('address', contacts.address);
                 form.setFieldValue('zalo_url', contacts.zalo_url);
                 form.setFieldValue('tiktok_url', contacts.tiktok_url);
                 form.setFieldValue('youtube_url', contacts.youtube_url);
@@ -88,15 +89,16 @@ function SettingInfo() {
     const handleUpdateConfigInfo = async (values) => {
         const {
             email,
-            facebook_url,
-            instagram_url,
-            phone_number,
-            telegram_url,
+            address,
+            zalo_url,
             tiktok_url,
             twitter_url,
             website_url,
             youtube_url,
-            zalo_url,
+            facebook_url,
+            phone_number,
+            telegram_url,
+            instagram_url,
             website_status_status,
             website_status_reason,
         } = values;
@@ -104,15 +106,16 @@ function SettingInfo() {
         const data = {
             contacts: {
                 email,
-                facebook_url,
-                instagram_url,
-                phone_number,
-                telegram_url,
+                address,
+                zalo_url,
                 tiktok_url,
                 twitter_url,
                 website_url,
                 youtube_url,
-                zalo_url,
+                facebook_url,
+                phone_number,
+                telegram_url,
+                instagram_url,
             },
             favicon_url: faviconUrl,
             website_logo_url: websiteLogoUrl,
@@ -134,11 +137,9 @@ function SettingInfo() {
                 description: result.message,
             });
         } else {
-            const description = result?.error.join('<br/>') || 'Lỗi hệ thống vui lòng thử lại sau';
-
             notification.error({
                 message: 'Thông báo',
-                description: <span dangerouslySetInnerHTML={{ __html: description }} />,
+                description: result.error || 'Lỗi hệ thống vui lòng thử lại sau',
             });
         }
     };
@@ -275,6 +276,11 @@ function SettingInfo() {
                     <Col md={12} xs={24}>
                         <Form.Item name="phone_number" label="SĐT">
                             <Input size="large" placeholder="SĐT" />
+                        </Form.Item>
+                    </Col>
+                    <Col md={12} xs={24}>
+                        <Form.Item name="address" label="Địa chỉ">
+                            <Input size="large" placeholder="Địa chỉ" />
                         </Form.Item>
                     </Col>
                     <Col span={24}>
