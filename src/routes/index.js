@@ -31,6 +31,7 @@ import OtherConfig from '~/pages/configPage/Setting/OtherConfig';
 import SettingSendMail from '~/pages/configPage/Setting/SettingSendMail';
 
 import Sources from '~/pages/sourcePage/Sources';
+import OrderSource from '~/pages/sourcePage/OrderSource';
 
 import Invoices from '~/pages/payPage/Invoices';
 import Charging from '~/pages/payPage/Charging';
@@ -74,6 +75,7 @@ export const privateRoutes = [
     { path: router.localbank_users, component: Userbank },
     { path: router.login, component: Login, layout: null },
     { path: router.settings_info, component: SettingInfo },
+    { path: router.sources_orders, component: OrderSource },
     { path: router.settings_other, component: OtherConfig },
     { path: router.users_histories, component: LoginHistory },
     { path: router.apis_players + '/:id', component: Account },

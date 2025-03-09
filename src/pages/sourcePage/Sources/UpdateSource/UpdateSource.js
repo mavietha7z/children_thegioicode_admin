@@ -166,14 +166,14 @@ function UpdateSource({ open, setOpen, source, callback, setCallback }) {
                 onFinish={handleUpdateSource}
                 initialValues={{
                     title: source.title,
+                    version: source.version,
                     slug_url: source.slug_url,
                     data_url: source.data_url,
                     demo_url: source.demo_url,
-                    version: source.version,
                     priority: source.priority,
                     view_count: source.view_count,
-                    purchase_count: source.purchase_count,
                     description: source.description,
+                    purchase_count: source.purchase_count,
                 }}
             >
                 <Row gutter={16}>

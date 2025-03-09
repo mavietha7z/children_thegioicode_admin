@@ -80,7 +80,10 @@ const items = [
         getItem(<Link to={router.templates}>Danh sách</Link>, router.templates),
         getItem(<Link to={router.templates_orders}>Đơn tạo website</Link>, router.templates_orders),
     ]),
-    getItem('Mã nguồn', 'sub-10', <IconSourceCode />, [getItem(<Link to={router.sources}>Danh sách</Link>, router.sources)]),
+    getItem('Mã nguồn', 'sub-10', <IconSourceCode />, [
+        getItem(<Link to={router.sources}>Danh sách</Link>, router.sources),
+        getItem(<Link to={router.sources_orders}>Đơn đã mua</Link>, router.sources_orders),
+    ]),
     getItem('Public API', 'sub-12', <IconApi />, [
         getItem(<Link to={router.apikey}>Apikey</Link>, router.apikey),
         getItem(<Link to={router.apis}>Danh sách</Link>, router.apis),
